@@ -448,7 +448,7 @@
         \fi
 
         {\sloppy
-        \textbf{Кључне речи:}
+        \textbf{Кључне ријечи:}
         \ifx\@keywordssr\@empty
             \if@hints Кључне речи на срском се дефинишу помоћу наредбе\\
             \texttt{\string\keywordssr\{текст\}}. \fi
