@@ -2,7 +2,7 @@
     \centering
     \subfloat[]{
     \vspace{-0.1cm}
-    \begin{tikzpicture}[scale=0.5]
+    \begin{tikzpicture}[scale=0.8]
         \ctikzset{tripoles/mos style/arrows}
         \ctikzset{tripoles/pmos style/emptycircle}
         \ctikzset{logic ports=ieee}
@@ -20,29 +20,29 @@
         (outl.east) node[anchor=west, scale=0.8]{OUTL}
         (nmos1.G|-nmos1.S) -- (nmos1.S) node[circ, scale=0.8](vss){} -- (nmos2.S) node[circ, scale=0.8]{} --++ (1,0)
         (pmos1.G|-pmos1.S) -- (pmos1.S) node[circ, scale=0.8](vddl){} -- (pmos2.S) node[circ, scale=0.8]{} --++ (1,0)
-	(vss) ++ (-0.45, -0.35) node[left, scale=0.8]{$\text{V}_\text{SS}$}
-	(vddl) ++ (-0.2, 0.35) node[left, scale=0.8]{$\text{V}_\text{DDL}$}
+	(vss) ++ (-0.15, -0.35) node[left, scale=0.8]{$\text{V}_\text{SS}$}
+	(vddl) ++ (0.05, 0.35) node[left, scale=0.8]{$\text{V}_\text{DDL}$}
         ;
     \end{tikzpicture}
-    %\vspace{0.5cm}
+    \vspace{0.35cm}
     }
     \label{HL_level_shifter}
     \hfil
     \subfloat[]{
-    \begin{tikzpicture}[scale=0.5]
+    \begin{tikzpicture}[scale=0.8]
         \ctikzset{tripoles/mos style/arrows}
         \ctikzset{tripoles/pmos style/emptycircle}
         \ctikzset{logic ports=ieee}
         \draw 
         (0,0) node[nmos, anchor=G, scale=0.8](nmos1){} --++
         (2,0) node[ieeestd not port, anchor=in, scale=0.8](inv){}
-        (nmos1.inner up) ++ (0.05,0.55) node[left, scale=0.8]{MN1}
+        (nmos1.inner up) ++ (0.05,0.4) node[left, scale=0.8]{MN1}
         (inv.out) --++ (0.8,0) node[nmos, anchor=G, scale=0.8](nmos2){MN2} 
         (nmos2.D) --++ (0,0.5) node[circ, scale=0.8](out){} --++ (0,0.5) node[pmos, anchor=D, scale=0.8](pmos2){MP2}
         (nmos1.D) --++ (0,0.5) node[circ, scale=0.8](outb){} --++ (0,0.5) node[pmos, xscale=-1, anchor=D, scale=0.8](pmos1){\ctikzflipx{MP1}}
         (outb) --++ (1,0) -- (pmos2.G)
         (out) --++ (-1,0) -- (pmos1.G)
-        (outb) ++ (-0.05,0.15) node[left, scale=0.8]{$\overline{\mbox{OUT}}$}
+        (outb) ++ (-0.05,0.10) node[left, scale=0.8]{$\overline{\mbox{OUT}}$}
         (out) --++ (1,0) node[signal, anchor=west, scale=0.8, draw](out_o){} 
         (out_o.east) node[anchor=west, scale=0.8]{OUT}
         (nmos1.G) --++ (-0.4,0) node[signal, anchor=east, scale=0.8, draw](in){} 
@@ -50,14 +50,14 @@
         (0,0|-nmos1.S) -- (nmos1.S) node[circ, scale=0.8](vss){} -- (inv.down|-nmos2.S) node[circ, scale=0.8]{} 
         (inv.down) |- (nmos2.S) node[circ, scale=0.8]{} --++ (1,0)
         (0,0|-pmos1.S) -- (pmos1.S) node[circ, scale=0.8](vddh){} -- (pmos2.S) node[circ, scale=0.8]{} --++ (1,0)
-	(vss) ++ (-0.4, -0.35) node[left, scale=0.8]{$\text{V}_\text{SS}$}
-	(vddh) ++ (-0.4, 0.35) node[left, scale=0.8]{$\text{V}_\text{DD}$}
+	(vss) ++ (-0.2, -0.35) node[left, scale=0.8]{$\text{V}_\text{SS}$}
+	(vddh) ++ (-0.15, 0.35) node[left, scale=0.8]{$\text{V}_\text{DD}$}
 	(inv.up) --++ (0,0.5) node[above, scale=0.8](vddl){$\text{V}_\text{DDL}$} ++ (-0.4,0) --++ (0.8,0)
         (inv.out) ++ (0.2,0) node[above, scale=0.8]{$\overline{\mbox{IN}}$}
         ;
     \end{tikzpicture}
     }
     \label{LH_level_shifter}
-    \caption{Schematic of (a) high-low and (b) low-high level shifters \cite{Osaki:6198744}.}
+    \caption{Шема претварача (а) са високог на низак и (б) са ниског на висок напонски ниво \cite{Osaki:6198744}.}
     \label{Level_shifters}
 \end{figure}

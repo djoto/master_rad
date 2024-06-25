@@ -1,0 +1,130 @@
+% FLL control simulation - PID mode
+%\begin{figure}[h]%[ht]
+%    \vspace{-0.6cm} % added to avoid empty space above the figure
+    \begin{tikzpicture}[scale=1, every node/.style={scale=1}]
+	        \pgfplotsset{%
+                    width=14cm,
+                    height=10cm
+                }
+       % Wave dimension setup
+		\def \waveDigHeight {1.0}
+		\def \waveAnaHeight {3.0}
+		\def \waveSpacing   {1.0}
+		\def \waveOffset    {0.2}
+		% Group plot
+		\begin{groupplot}
+			[xlabel={\footnotesize Time [\textmu s]},
+			 axis line style={draw=none}, % remove axis lines and arrows
+			 xtick style={draw=none}, % remove tick dash
+			 ytick style={draw=none}, % remove tick dash
+			 xticklabel style = {font=\footnotesize},
+			 ymin=0, ymax=22, % NUM_WAVES*WAVE_HEIGHT+(NUM_WAVES+1)*WAVE_SPACING
+			 xmin=0, xmax=3.0,
+			 yticklabel style={xshift=0.2em} % move labels closer to axis
+			]			
+			% Wave position and max/min value setup
+			%\def \waveDCOclkY    {2.5}
+			%\def \waveFllFreqY   {\waveDCOclkY+\waveDigHeight*0.5+\waveSpacing+\waveAnaHeight*0.5}
+			\def \waveFllLockY   {1.5}
+			\def \waveFllFreqY   {\waveFllLockY+\waveAnaHeight*0.5+\waveSpacing+\waveDigHeight*0.5}
+			\def \waveFllFreqMax {650}
+			\def \waveFllFreqMin {0}
+			\def \waveDCOcodeY   {\waveFllFreqY+\waveAnaHeight+\waveSpacing}
+			\def \waveDCOcodeMax {255}
+			\def \waveDCOcodeY   {\waveFllFreqY+\waveAnaHeight+\waveSpacing}
+			\def \waveDCOcodeMax {255}
+			\def \waveDCOcntY    {\waveDCOcodeY+\waveAnaHeight+\waveSpacing}
+			\def \waveDCOcntMax  {25}
+			\def \waveClkDivY    {\waveDCOcntY+\waveAnaHeight*0.5+\waveSpacing+\waveDigHeight*0.5}
+			\def \waveRstnY      {\waveClkDivY+\waveDigHeight+\waveSpacing}
+			% Draw rectangle round group plot
+			\draw (0,0) rectangle (30.1em,17.6em);
+			% Set up group plot
+			\nextgroupplot[ylabel={}, 
+			               ytick={\waveFllLockY, \waveFllLockY-0.5*\waveDigHeight+\waveOffset, \waveFllLockY+0.5*\waveDigHeight-\waveOffset, % FLL lock
+			                      \waveFllFreqY, \waveFllFreqY-0.5*\waveAnaHeight+\waveOffset, \waveFllFreqY+0.5*\waveAnaHeight-\waveOffset, % FLL frequency
+			                      \waveDCOcodeY, \waveDCOcodeY-0.5*\waveAnaHeight+\waveOffset, \waveDCOcodeY+0.5*\waveAnaHeight-\waveOffset, % DCO control code
+			                      \waveDCOcntY,   \waveDCOcntY-0.5*\waveAnaHeight+\waveOffset,  \waveDCOcntY+0.5*\waveAnaHeight-\waveOffset, % DCO counter
+			                      \waveClkDivY,   \waveClkDivY-0.5*\waveDigHeight+\waveOffset,  \waveClkDivY+0.5*\waveDigHeight-\waveOffset, % Clock
+			                      \waveRstnY,       \waveRstnY-0.5*\waveDigHeight+\waveOffset,    \waveRstnY+0.5*\waveDigHeight-\waveOffset  % Reset
+			                     },
+			               extra y ticks={\waveFllLockY-0.5*\waveDigHeight, \waveFllLockY+0.5*\waveDigHeight, % FLL lock
+                			              \waveFllFreqY-0.5*\waveAnaHeight, \waveFllFreqY+0.5*\waveAnaHeight, % FLL frequency
+			                              \waveDCOcodeY-0.5*\waveAnaHeight, \waveDCOcodeY+0.5*\waveAnaHeight, % DCO control code
+			                               \waveDCOcntY-0.5*\waveAnaHeight,  \waveDCOcntY+0.5*\waveAnaHeight, % DCO counter
+			                               \waveClkDivY-0.5*\waveDigHeight,  \waveClkDivY+0.5*\waveDigHeight, % Clock
+			                                 \waveRstnY-0.5*\waveDigHeight,    \waveRstnY+0.5*\waveDigHeight  % Reset
+			                             },
+			               extra tick style={grid=major, color=lightgray, dotted},        
+			               extra y tick labels={},       
+			               yticklabels={\textcolor{\DCOColor}{\footnotesize \framebox{FLL lock} \hspace{5pt}},
+			                            \textcolor{\DCOColor}{\scriptsize 0},
+			                            \textcolor{\DCOColor}{\scriptsize 1},
+			                            \textcolor{\DCOColor}{\footnotesize \framebox{FLL freq} \hspace{5pt}},
+			                            \textcolor{\DCOColor}{\scriptsize \waveFllFreqMin},
+			                            \textcolor{\DCOColor}{\scriptsize \waveFllFreqMax},
+			                            \textcolor{\PIDctrlColor}{\footnotesize \framebox{DCO code} \hspace{5pt}},
+			                            \textcolor{\PIDctrlColor}{\scriptsize 0},
+			                            \textcolor{\PIDctrlColor}{\scriptsize \waveDCOcodeMax},
+			                            \textcolor{\CtrlPreprocColor}{\footnotesize \framebox{DCO cnt} \hspace{5pt}},
+			                            \textcolor{\CtrlPreprocColor}{\scriptsize 0},
+			                            \textcolor{\CtrlPreprocColor}{\scriptsize \waveDCOcntMax },
+			                            \textcolor{\ClkDivColor}{\footnotesize \framebox{Clock} \hspace{5pt}},
+			                            \textcolor{\ClkDivColor}{\scriptsize 0},
+			                            \textcolor{\ClkDivColor}{\scriptsize 1},
+			                            \textcolor{\RstnColor}{\footnotesize \framebox{Reset} \hspace{5pt}},
+			                            \textcolor{\RstnColor}{\scriptsize 0},
+			                            \textcolor{\RstnColor}{\scriptsize 1}                                                      
+			                           }
+			              ]
+			% Reset signal			
+			\addplot [ line width=0.4pt, \RstnColor,
+			           shift={(axis direction cs:0,\waveRstnY-0.5*\waveDigHeight)}
+			         ] table [x index=0, 
+			                  y expr=\thisrowno{1}, 
+			                  col sep=comma
+			                 ] {wav/pid/fll_tb.u_fll.rst_ni.csv};
+			% Clock signal
+			\addplot [ line width=0.4pt, \ClkDivColor ,
+			           shift={(axis direction cs:0,\waveClkDivY-0.5*\waveDigHeight)}
+			         ] table [x index=0, 
+			                  y expr=\thisrowno{1}, 
+			                  col sep=comma
+			                 ] {wav/pid/fll_tb.u_fll.clk_ref_div2.csv};
+			% DCO counter sampled & synchronized			
+			\addplot [ line width=0.4pt, \CtrlPreprocColor,
+			           shift={(axis direction cs:0,\waveDCOcntY-0.5*\waveAnaHeight)}
+			         ] table [x index=0, 
+			                  y expr=\thisrowno{1}*\waveAnaHeight/\waveDCOcntMax, 
+			                  col sep=comma
+			                 ] {wav/pid/fll_tb.u_fll.cnt_dco_q.csv};
+			% DCO code
+			\addplot [ line width=0.4pt, \PIDctrlColor, 
+			           shift={(axis direction cs:0,\waveDCOcodeY-0.5*\waveAnaHeight)}
+			         ] table [x index=0, 
+			                  y expr=\thisrowno{1}*\waveAnaHeight/\waveDCOcodeMax, 
+			                  col sep=comma
+			                 ] {wav/pid/fll_tb.u_fll.u_dco.code.csv};                 
+            % FLL Frequency        
+			\addplot [ line width=0.4pt, \DCOColor,
+			           shift={(axis direction cs:0,\waveFllFreqY-0.5*\waveAnaHeight)}
+			         ] table [x index=0, 
+			                  y expr=\thisrowno{1}*\waveAnaHeight/\waveFllFreqMax, 
+			                  col sep=comma
+			                 ] {wav/pid/fll_tb.u_fll.u_dco.dco_freq_MHz.csv};    
+            % FLL Lock        
+			\addplot [ line width=0.4pt, \DCOColor,
+			           shift={(axis direction cs:0,\waveFllLockY-0.5*\waveDigHeight)}
+			         ] table [x index=0, 
+			                  y expr=\thisrowno{1}, 
+			                  col sep=comma
+			                 ] {wav/pid/fll_tb.u_fll.lock_o.csv};               
+		\end{groupplot}
+		% Mark lock time
+		\draw[<->]             (2.7,7.55) -- (10.4,7.55) node[midway, above=0.005] {\footnotesize Вријеме закључавања \FLL-a у \PID\ режиму: 1.825\,\textmu s};
+		\draw[-, gray, dashed] (2.69,1.4) -- (2.69,7.7);
+		\draw[-, gray, dashed] (10.41,0.77) -- (10.41,7.7);
+    \end{tikzpicture}
+%	\caption{FLL control simulation: PID mode, locking time of 1.8\,\textmu s.}
+%	\label{sim_PID}    
+%\end{figure}
