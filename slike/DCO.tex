@@ -121,7 +121,7 @@
     (r3) ++ (-0.5,1.8) node[](rc4){}
     (rc1) ++ (0,0.5) node[](rc2){}
     (rc4) ++ (0,0.5) node[](rc3){}
-    ($(rc1)!0.5!(rc4)$) node[anchor=south, scale=0.8, text=\CtrlDecColor]{Column Control};
+    ($(rc1)!0.5!(rc4)$) node[anchor=south, scale=0.8, text=\CtrlDecColor]{Управљање колонама};
     \filldraw[draw, \CtrlDecColor, fill=\CtrlDecColor, fill opacity=\CtrlDecFillOpacity] (rc1.center) -- (rc2.center) -- (rc3.center) -- (rc4.center) -- (rc1.center);
     %
     % HLLS FROM COLUMN CONTROL RECTANGLE
@@ -138,7 +138,7 @@
     (r2) ++ (-1.8,-1.2) node[](rr4){}
     (rr1) ++ (-0.5,0) node[](rr2){}
     (rr4) ++ (-0.5,0) node[](rr3){}
-    ($(rr1)!0.5!(rr4)$) node[anchor=north, scale=0.8, rotate=-90, text=\CtrlDecColor]{Row Control};
+    ($(rr1)!0.5!(rr4)$) node[anchor=north, scale=0.8, rotate=-90, text=\CtrlDecColor]{Управљање редовима};
     \filldraw[draw, \CtrlDecColor, fill=\CtrlDecColor, fill opacity=\CtrlDecFillOpacity] (rr1.center) -- (rr2.center) -- (rr3.center) -- (rr4.center) -- (rr1.center);
     %
     % HLLS FROM ROW CONTROL RECTANGLE
@@ -161,7 +161,7 @@
         \draw
         (rph\i.center) --++ (0.4,0) node[inputarrow](){} node[rectangle, minimum size=3, thick, anchor=west, scale=0.7, color=LHLSColor, fill=LHLSColor, fill opacity=\LHLSFillOpacity, text opacity=\LHLSTextOpacity, draw](lh\i){LHLS} 
         (lh\i.east) --++ (0.4,0) node[signal, anchor=west, fill=ColorPhase\i, draw](ph\i){} node[inputarrow](){}
-        (ph\i.east) node[anchor=west, scale=0.8]{Phase \i};
+        (ph\i.east) node[anchor=west, scale=0.8]{Фаза \i};
     }
 \end{tikzpicture}
 \caption{Петостепени прстенасти дигитално контролисани осцилатор (\DCO) састављен од тростатичких инвертора, са додатим претварачима напонских нивоа (\HLLS\ и \LHLS) и уоквиреним редом увијек укључених тростатичких инвертора.}

@@ -2,58 +2,59 @@
     \centering
     \subfloat[]{
     \vspace{-0.1cm}
-    \begin{tikzpicture}[scale=0.8]
+    \begin{tikzpicture}[scale=1]
         \ctikzset{tripoles/mos style/arrows}
         \ctikzset{tripoles/pmos style/emptycircle}
         \ctikzset{logic ports=ieee}
         \draw (0,0)
-        node[pmos, scale=0.8](pmos1){MP1}
-        (pmos1.D) to [short] ++(0,-0.1) node[nmos, scale=0.8, anchor=D](nmos1){MN1}
+        node[pmos, scale=1](pmos1){MP1}
+        (pmos1.D) to [short] ++(0,-0.1) node[nmos, scale=1, anchor=D](nmos1){MN1}
         (pmos1.G) to (nmos1.G)
-        ($(pmos1.G)!0.5!(nmos1.G)$) node[circ, scale=0.8]{} --++ (-0.6,0) node[signal, anchor=east, scale=0.8, draw](inh){} 
-        (inh.west) node[anchor=east, scale=0.8]{INH}
-        ($(pmos1.D)!0.5!(nmos1.D)$) node[circ, scale=0.8]{} --++(1.5,0) node[circ, scale=0.8]{}
-        (nmos1.center) ++ (1.5,0) node[nmos, scale=0.8, anchor=G](nmos2){MN2}
-        (nmos2.D) to [short] ++(0,0.1) node[pmos, scale=0.8, anchor=D](pmos2){MP2}
+        ($(pmos1.G)!0.5!(nmos1.G)$) node[circ, scale=1]{} --++ (-0.6,0) node[signal, anchor=east, scale=1, draw](inh){} 
+        (inh.west) node[anchor=east, scale=1]{INH}
+        ($(pmos1.D)!0.5!(nmos1.D)$) node[circ, scale=1]{} --++(1.5,0) node[circ, scale=1]{}
+        (nmos1.center) ++ (1.5,0) node[nmos, scale=1, anchor=G](nmos2){MN2}
+        (nmos2.D) to [short] ++(0,0.1) node[pmos, scale=1, anchor=D](pmos2){MP2}
         (nmos2.G) to (pmos2.G)
-        ($(pmos2.D)!0.5!(nmos2.D)$) node[circ, scale=0.8]{} --++ (0.6,0) node[signal, anchor=west, scale=0.8, draw](outl){}
-        (outl.east) node[anchor=west, scale=0.8]{OUTL}
-        (nmos1.G|-nmos1.S) -- (nmos1.S) node[circ, scale=0.8](vss){} -- (nmos2.S) node[circ, scale=0.8]{} --++ (1,0)
-        (pmos1.G|-pmos1.S) -- (pmos1.S) node[circ, scale=0.8](vddl){} -- (pmos2.S) node[circ, scale=0.8]{} --++ (1,0)
-	(vss) ++ (-0.15, -0.35) node[left, scale=0.8]{$\text{V}_\text{SS}$}
-	(vddl) ++ (0.05, 0.35) node[left, scale=0.8]{$\text{V}_\text{DDL}$}
+        ($(pmos2.D)!0.5!(nmos2.D)$) node[circ, scale=1]{} --++ (0.6,0) node[signal, anchor=west, scale=1, draw](outl){}
+        (outl.east) node[anchor=west, scale=1]{OUTL}
+        (nmos1.G|-nmos1.S) -- (nmos1.S) node[circ, scale=1](vss){} -- (nmos2.S) node[circ, scale=1]{} --++ (1,0)
+        (pmos1.G|-pmos1.S) -- (pmos1.S) node[circ, scale=1](vddl){} -- (pmos2.S) node[circ, scale=1]{} --++ (1,0)
+	(vss) ++ (-0.15, -0.35) node[left, scale=1]{$\text{V}_\text{SS}$}
+	(vddl) ++ (0.05, 0.35) node[left, scale=1]{$\text{V}_\text{DDL}$}
         ;
     \end{tikzpicture}
     \vspace{0.35cm}
     }
     \label{HL_level_shifter}
-    \hfil
+    \vfil
+    \vspace{0.3cm}
     \subfloat[]{
-    \begin{tikzpicture}[scale=0.8]
+    \begin{tikzpicture}[scale=1]
         \ctikzset{tripoles/mos style/arrows}
         \ctikzset{tripoles/pmos style/emptycircle}
         \ctikzset{logic ports=ieee}
         \draw 
-        (0,0) node[nmos, anchor=G, scale=0.8](nmos1){} --++
-        (2,0) node[ieeestd not port, anchor=in, scale=0.8](inv){}
-        (nmos1.inner up) ++ (0.05,0.4) node[left, scale=0.8]{MN1}
-        (inv.out) --++ (0.8,0) node[nmos, anchor=G, scale=0.8](nmos2){MN2} 
-        (nmos2.D) --++ (0,0.5) node[circ, scale=0.8](out){} --++ (0,0.5) node[pmos, anchor=D, scale=0.8](pmos2){MP2}
-        (nmos1.D) --++ (0,0.5) node[circ, scale=0.8](outb){} --++ (0,0.5) node[pmos, xscale=-1, anchor=D, scale=0.8](pmos1){\ctikzflipx{MP1}}
+        (0,0) node[nmos, anchor=G, scale=1](nmos1){} --++
+        (2,0) node[ieeestd not port, anchor=in, scale=1](inv){}
+        (nmos1.inner up) ++ (0.05,0.4) node[left, scale=1]{MN1}
+        (inv.out) --++ (0.8,0) node[nmos, anchor=G, scale=1](nmos2){MN2} 
+        (nmos2.D) --++ (0,0.5) node[circ, scale=1](out){} --++ (0,0.5) node[pmos, anchor=D, scale=1](pmos2){MP2}
+        (nmos1.D) --++ (0,0.5) node[circ, scale=1](outb){} --++ (0,0.5) node[pmos, xscale=-1, anchor=D, scale=1](pmos1){\ctikzflipx{MP1}}
         (outb) --++ (1,0) -- (pmos2.G)
         (out) --++ (-1,0) -- (pmos1.G)
-        (outb) ++ (-0.05,0.10) node[left, scale=0.8]{$\overline{\mbox{OUT}}$}
-        (out) --++ (1,0) node[signal, anchor=west, scale=0.8, draw](out_o){} 
-        (out_o.east) node[anchor=west, scale=0.8]{OUT}
-        (nmos1.G) --++ (-0.4,0) node[signal, anchor=east, scale=0.8, draw](in){} 
-        (in.west) node[anchor=east, scale=0.8]{IN} 
-        (0,0|-nmos1.S) -- (nmos1.S) node[circ, scale=0.8](vss){} -- (inv.down|-nmos2.S) node[circ, scale=0.8]{} 
-        (inv.down) |- (nmos2.S) node[circ, scale=0.8]{} --++ (1,0)
-        (0,0|-pmos1.S) -- (pmos1.S) node[circ, scale=0.8](vddh){} -- (pmos2.S) node[circ, scale=0.8]{} --++ (1,0)
-	(vss) ++ (-0.2, -0.35) node[left, scale=0.8]{$\text{V}_\text{SS}$}
-	(vddh) ++ (-0.15, 0.35) node[left, scale=0.8]{$\text{V}_\text{DD}$}
-	(inv.up) --++ (0,0.5) node[above, scale=0.8](vddl){$\text{V}_\text{DDL}$} ++ (-0.4,0) --++ (0.8,0)
-        (inv.out) ++ (0.2,0) node[above, scale=0.8]{$\overline{\mbox{IN}}$}
+        (outb) ++ (-0.05,0.10) node[left, scale=1]{$\overline{\mbox{OUT}}$}
+        (out) --++ (1,0) node[signal, anchor=west, scale=1, draw](out_o){} 
+        (out_o.east) node[anchor=west, scale=1]{OUTH}
+        (nmos1.G) --++ (-0.4,0) node[signal, anchor=east, scale=1, draw](in){} 
+        (in.west) node[anchor=east, scale=1]{INL} 
+        (0,0|-nmos1.S) -- (nmos1.S) node[circ, scale=1](vss){} -- (inv.down|-nmos2.S) node[circ, scale=1]{} 
+        (inv.down) |- (nmos2.S) node[circ, scale=1]{} --++ (1,0)
+        (0,0|-pmos1.S) -- (pmos1.S) node[circ, scale=1](vddh){} -- (pmos2.S) node[circ, scale=1]{} --++ (1,0)
+	(vss) ++ (-0.2, -0.35) node[left, scale=1]{$\text{V}_\text{SS}$}
+	(vddh) ++ (-0.15, 0.35) node[left, scale=1]{$\text{V}_\text{DD}$}
+	(inv.up) --++ (0,0.5) node[above, scale=1](vddl){$\text{V}_\text{DDL}$} ++ (-0.4,0) --++ (0.8,0)
+        (inv.out) ++ (0.2,0) node[above, scale=1]{$\overline{\mbox{INL}}$}
         ;
     \end{tikzpicture}
     }
