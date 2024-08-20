@@ -43,7 +43,7 @@
         (nmos1.D) --++ (0,0.5) node[circ, scale=1](outb){} --++ (0,0.5) node[pmos, xscale=-1, anchor=D, scale=1](pmos1){\ctikzflipx{MP1}}
         (outb) --++ (1,0) -- (pmos2.G)
         (out) --++ (-1,0) -- (pmos1.G)
-        (outb) ++ (-0.05,0.10) node[left, scale=1]{$\overline{\mbox{OUT}}$}
+        (outb) ++ (-0.05,0.10) node[left, scale=1]{$\overline{\mbox{OUTH}}$}
         (out) --++ (1,0) node[signal, anchor=west, scale=1, draw](out_o){} 
         (out_o.east) node[anchor=west, scale=1]{OUTH}
         (nmos1.G) --++ (-0.4,0) node[signal, anchor=east, scale=1, draw](in){} 

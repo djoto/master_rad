@@ -120,7 +120,7 @@ class fll:
             freq_arr.append(dco_freq)
             cnt_loop += 1
         
-        str_crtl_man = "Manual control: " + str(self.dco_ctrl_man_i) if (self.dco_ctrl_mode_i in [1, 3]) else "Manual control: " + str(203)
+        str_ctrl_man = "Manual control: " + str(self.dco_ctrl_man_i) if (self.dco_ctrl_mode_i in [1, 3]) else "Manual control: " + str(203)
         str_ctrl_auto = "PID control"  if (self.dco_ctrl_mode_i in [1, 3]) else "Bang-bang control"
         str_ctrl = str_ctrl_auto if (self.dco_ctrl_mode_i in [2, 3]) else str_ctrl_man
         # print("Number of steps until reaching 640MHz (" + str_ctrl + "): " + str(num_steps_for_640) + "\n")
