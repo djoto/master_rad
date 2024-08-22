@@ -183,7 +183,7 @@
 Као примјер појаве метастабилности може се навести проблем који се може јавити у употреби природних бинарних кодова, а то је да се, при преласку у наредно стање бројача, стање свих битова који се мијењају не мора промијенити тачно синхронизовано. Рецимо, при преласку из стања 3 у стање 4 (бинарно 011 у 100), код природног бинарног бројача сви битови мијењају стање, тако да та транзиција може да иде редом 011 $\rightarrow$ 001 $\rightarrow$ 101 $\rightarrow$ 100, што значи да могу да постоје два прелазна стања, која могу бити прочитана чиме би коначно стање бројача било погрешно. У овом конкретном случају, умјесто у стање 4 (бинарно 100), бројач би завршио у стању 1 (бинарно 001) или 5 (бинарно 101), за шта не постоји могућност при употреби Грејевог кода јер се у њему из стања 011 прелази у стање 010, при чему се мијења само један бит. \par 
 Недостатак овог приступа је то што Грејев бројач има мању максималну радну фреквенцију од бинарног бројача. Да би се у још већем обиму смањио ризик од метастабилности, сваки бит са излаза Грејевог бројача се пропушта кроз синхронизатор са два флип-флопа да би безбједно прешао у подручје референтног такта. Затим, синхронизована вриједност Грејевог бројача се претвара у природан бинарни формат и узоркује се за даљу обраду.
 
-\subsection{Bang-bang контролер}
+\subsection{Bang-bang контролер} \label{section:bang_bang}
 У теорији управљања, bang-bang контролер (двофазни или on-off контролер) је контролер повратне спреге које се нагло пребацује између два стања. Математички модел bang-bang контролера може се представити преко Хевисајдове функције (или јединичне одскочне функције) која која се иначе користи у математици система управљања и обради сигнала да би се представио сигнал који мијења стање у одређено вријеме. Она има вриједност $0$ за негативне вриједности аргумента и $1$ за позитивне вриједности аргумента:
 % TODO
 % Пребацити у TikZ слику испод
@@ -709,23 +709,10 @@ module cnt_gray #(
 
 endmodule
 \end{lstlisting}
-Добијена вриједност у Грејевом коду се синхронизује кроз два флип флопа и претвара се у природну бинарну вриједност, а имплементација тога је унутар \prog{fll} модула и дата је у~\lstlistingname{у}~\ref{lst:sv:fll_sync_gray_to_bin}. Магистрала \prog{cnt\_dco} представља тренутни умножак фреквенције добијене на излазу \DCO-a, и представља податак спреман за поређење са жељеним умношком са улаза, унутар блока управљачке логике (у \PID\ или bang-bang режиму).
-\begin{lstlisting}[language=Verilog, caption={Синхронизација и претварање Грејевог кода у природну бинарну вриједност.}, label={lst:sv:fll_sync_gray_to_bin}]
+Добијена вриједност у Грејевом коду се синхронизује кроз два флип флопа и претвара се у природну бинарну вриједност, а имплементација тога је унутар \prog{fll} модула и дата је у~\lstlistingname{у}~\ref{lst:sv:fll_sync_gray_to_bin}. Семплована вриједност Грејевог бројача је на магистрали \prog{cnt\_dco\_gray\_q2}, док је природна бинарна вриједност на магистрали \prog{cnt\_dco} и она суштински представља тренутни умножак фреквенције добијене на излазу \DCO-a, и представља податак спреман за поређење са жељеним умношком са улаза, унутар блока управљачке логике (у \PID\ или bang-bang режиму). Сваки бит у тој магистали се добија као резултат логичке XOR операције над свим битовима Грејевог записа, помјереног онолико мјеста удесно колико износи тежина тренутног бита у \prog{cnt\_dco} магистрали (имплементација на линији \prog{7} у \lstlistingname{у}~\ref{lst:sv:fll_sync_gray_to_bin}). \par
+\begin{lstlisting}[language=Verilog, caption={Претварање Грејевог кода у природну бинарну вриједност.}, label={lst:sv:fll_sync_gray_to_bin}]
 module fll #(
   ...
-  // Sample DCO cnt value
-  always_ff @(posedge clk_ref_div2 or negedge rst_clk_ref_div2_n) begin
-    if (!rst_clk_ref_div2_n) begin
-      cnt_dco_gray_q  <= '0;
-      cnt_dco_gray_q2 <= '0;
-      cnt_dco_q       <= '0;
-    end else begin
-      cnt_dco_gray_q  <= cnt_dco_gray_d;
-      cnt_dco_gray_q2 <= cnt_dco_gray_q;
-      cnt_dco_q       <= cnt_dco;
-    end
-  end
-
   // Gray to binary conversion
   genvar i;
   generate
@@ -736,6 +723,53 @@ module fll #(
   ...
 endmodule
 \end{lstlisting}
+Bang-bang (или On-Off) контролер, као један дио управљачке логике, је подробније објашњен у поглављу~\ref{section:bang_bang}. Као што је тамо напоменуто, састоји се од компаратора и једног бројача. Компаратор служи за поређење добијеног и жељеног умношка фреквенције, а резултат се шаље у бројач који на основи њега одређује како подесити управљачку ријеч за \DCO. \lstlistingname~\ref{lst:sv:bang_bang:comparator} приказује компараторски дио који се налази унутар \prog{fll} модула. Као што се може закључити, \prog{cnt\_dco\_q} представља семпловану вриједност тренутног умношка, односно вриједност \prog{cnt\_dco} из \lstlistingname{a}~\ref{lst:sv:fll_sync_gray_to_bin}. Сигнал \prog{cnt\_ref\_up\_dn} одређује да ли инкрементирати или декрементирати управљачку ријеч \DCO-а, док сигнал \prog{cnt\_ref\_en} одређује да ли уопште мијењати вриједност бројача (сигнал \prog{lock\_o} ће бити поменут при анализи имплементације \PID\ контолера). Закључује се да се поменути сигнали прослијеђују даље у блок бројача, чија је имплементација, као посебног \prog{cnt} модула, приказана у \lstlistingname{у}~\ref{lst:sv:bang_bang:cnt}. Сигнали \prog{cnt\_ref\_up\_dn} и \prog{cnt\_ref\_en} се при инстанцирању \prog{cnt} модула прослијеђују на његове \prog{up\_down\_i} и \prog{en\_i} улазе, респективно. \par
+\begin{lstlisting}[language=Verilog, caption={Компараторски дио bang-bang контролера.}, label={lst:sv:bang_bang:comparator}]
+module fll #(
+  ...
+  // Comparator (TODO: sequential logic?)
+  logic  cnt_ref_up_dn;
+  logic  cnt_ref_en;
+  assign cnt_ref_up_dn = (clk_mult_i >= cnt_dco_q) ?    1'b1 : 1'b0;
+  assign cnt_ref_en    = (clk_mult_i != cnt_dco_q) ? ~lock_o : 1'b0;
+  ...
+endmodule
+\end{lstlisting}
+\begin{lstlisting}[language=Verilog, caption={Имплементација бројача из bang-bang контролера.}, label={lst:sv:bang_bang:cnt}]
+// Up-down counter with enable
+module cnt #(
+  parameter int  W   = 8,     // count width (number of bits)
+  parameter byte Val = W'(0)  // counter default value
+) (
+  // Clock and reset
+  input                clk_i,     // clock
+  input                rst_ni,    // async reset
+  // Control
+  input                en_i,      // enables counting
+  input                up_down_i, // count direction
+  // Count data output
+  output logic [W-1:0] cnt_o      // count output
+);
+
+always_ff @(posedge clk_i or negedge rst_ni) begin
+  if (!rst_ni) begin
+    cnt_o <= Val;
+  end else begin
+    if (en_i) begin
+      if (up_down_i == 1'b1) begin
+        cnt_o <= W'(cnt_o + W'(1));
+      end else begin
+        cnt_o <= W'(cnt_o - W'(1));
+      end
+    end else begin
+      cnt_o <= cnt_o;
+    end
+  end
+end
+
+endmodule
+\end{lstlisting}
+
 
 
 
