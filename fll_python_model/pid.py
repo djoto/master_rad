@@ -25,7 +25,9 @@ class pid:
         self.err_prev = 0
         self.ctrl_pid = 0
 
-    def run(self):
+    def run(self,
+            rst_ni):
+        self.rst_ni = rst_ni
 
         if (not self.rst_ni):
             self.err_eq0_cnt = 0
@@ -36,13 +38,8 @@ class pid:
         prop = 0
         # integ = 0
         deriv = 0
-        # ctrl_pid = 0
         self.err = self.setpoint_i - self.feedback_i
         err_diff = self.err - self.err_prev
-
-        # print("pid: self.feedback_i: " + str(self.feedback_i))
-        # print("pid: err_diff: " + str(err_diff))
-        # print("pid: self.err: " + str(self.err))
 
         if (not self.rst_ni):
             prop = 0
@@ -61,11 +58,5 @@ class pid:
             if (not self.lock_o):
                 self.ctrl_pid = prop + self.integ + deriv
 
-        # print("pid: self.ctrl_pid: " + str(self.ctrl_pid))
-
-        # self.ctrl_o = int(format(self.ctrl_pid, '018b')[::-1][6:14][::-1], 2)
-        # self.ctrl_o = int(format(self.ctrl_pid, '018b')[4:12], 2)
-        # self.ctrl_o = copy.deepcopy(self.ctrl_pid)
         self.ctrl_o = int(format(int(self.ctrl_pid), '018b')[4:12], 2)
-        return {"ctrl_o": self.ctrl_o,
-                "lock_o": self.lock_o}
+

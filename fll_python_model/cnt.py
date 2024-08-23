@@ -1,6 +1,5 @@
 class cnt:
-    def __init__(self,
-                 cnt_o):
+    def __init__(self):
         self.cnt_o = 0
         self.default_val = 0
 
