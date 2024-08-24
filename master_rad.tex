@@ -547,7 +547,12 @@ Kao што је већ наведено, \FLL\ из овог рада има д�
 \begin{equation}
     	P = \frac{C_\text{tot}V^{2}_\text{DDL}}{2t_\text{d}},
 \end{equation}
-одакле се види да је добијена динамичка снага независна од $N$~\cite{Razavi:PLL_CMOS_2020}.
+одакле се види да је добијена динамичка снага независна од $N$~\cite{Razavi:PLL_CMOS_2020}. \par
+С обзиром да је одређени број тростатичких инвертора увијек укључен, \DCO\ има одређену почетну фреквенцију која не зависи од управљачке ријечи \DCO-а. Тренутна излазна фреквенција ће стога у основи зависити од почетне фреквенције, фреквенцијског корака тј. резолуције и управљачке ријечи. Стога се може написати следећа линеарна зависност фреквенције осциловања, која може послужити за софтверску имплементацију рада \DCO-а~\text{\cite{Milovanovic:8190103}}:  
+\begin{equation} \label{f_dco}
+	f_\text{DCO} = f_\text{0} + K_\text{DCO} \cdot d,
+\end{equation} 
+гдје су $f_\text{0}$ почетна фреквенција, $K_\text{DCO}$ резолуција фреквенције, а $d$ је управљачка дигитална ријеч.
 
 \subsection{Архитектура предложеног \DCO-a}
 У овом раду описана је топологија \DCO-a са пет фаза, због тога што је таквом топологијом остварен задовољавајући компромис између учинка и потрошње снаге тј. под задовољавајућим условима се достиже жељена фреквенција са довољном прецизношћу. \figurename~\ref{DCO5} приказује структуру \DCO-а коришћеног у описаној \FLL\ имплементацији. \par
@@ -1029,6 +1034,220 @@ endmodule
 
 \section{Пајтон модел \FLL-а} \label{section:python_model}
 У сврху практичнијег симулирања и бољег предвиђања понашања \FLL-а при различитим условима рада, направљен је основни Пајтон модел цјелокупног \FLL-а. Предност посједовања таквог модела јесте што се одређене карактеристике конкретног дизајна могу параметризовати и затим је, у зависности од тога колико услова модел покрива, могуће веома брзо добити мање или више вјеродостојан резултат понашања тог дизајна, умјесто да се, с друге стране, мијења дизајн и додатним симулацијама утврђују карактеристике под различитим условима, па тек затим пређе на симулације крајњег понашања, што доста успорава процес пројектовања. Конкретна имплементација Пајтон модела \FLL-а из овог рада обухвата, поред параметара самог \FLL-а, и параметризовану почетну фреквенцију \DCO-а и његову резолуцију, што омогућава тренутно добијање резултата симулације. Треба напоменути да направљени модел предвиђа константне услове рада тј. параметри модела се не мијењају током времена, односно кроз итерације у петљи модела, и да модел не покрива све услове рада. То значи да графици приказани у наставку не морају да одговарају стварном одзиву имплементираног система, већ су ту да пројектанта наведу на што исправнију употребу одређених константи (као што су овде \PID\ константе) или да му помогну око одабира компоненти дизајна чије појединачно понашање му је већ познато и може да се параметризује (рецимо понашање \DCO-а). \par
+
+\subsection{Пајтон код} \label{section:python_model:source}
+У наставку ће бити приказан изворни Пајтон код модела, са логиком и називима промјенљивих који углавном одговарају онима из SystemVerilog хардверске имплементације. Биће наведени само листинзи, без детаљног објашњења кода, јер је већина принципа рада већ анализирана при опису хардверске имплементације. Прегледности ради, код је подијељен у класе и то:
+\begin{itemize}
+	\item \prog{fll} - Класа \FLL\ компоненте (\lstlistingname~\ref{lst:py:fll}).
+	\item \prog{pid} - Класа \PID\ контролера (\lstlistingname~\ref{lst:py:pid}).
+	\item \prog{cnt} - Класа бројача из bang-bang контролера (\lstlistingname~\ref{lst:py:cnt}).
+	\item \prog{dco} - Класа дигитално контролисаног осцилатора (\lstlistingname~\ref{lst:py:dco}).
+\end{itemize}
+С обзиром да \prog{dco} класа нема хардверску имплементацију у виду SystemVerilog модула, треба напоменути да се логика имплементације софтверског модела ослања на једначину~\ref{f_dco} што се може видјети у~\lstlistingname{у}~\ref{lst:py:dco}.
+\begin{lstlisting}[language=Python, caption={Имплементација модела \FLL\ компоненте.}, label={lst:py:fll}]
+from dco import dco
+from cnt import cnt
+from pid import pid
+
+class fll:
+    def __init__(self,
+                 # Inputs from design
+                 CW,               # control word width
+                 clk_ref_i,        # reference clock
+                 clk_ref_en_i,     # reference clock enable
+                 rst_ni,           # async reset
+                 clk_mult_i,       # reference frequency multiplier [40]
+                 dco_pwr_sel_i,    # DCO clock output power supply selection: VDDL/VDD [0/1]
+                 dco_ctrl_man_i,   # manual DCO control word [200]
+                 dco_ctrl_mode_i,  # DCO control mode: FIXED/MANUAL/CNT/PID [3/2]
+                 pid_kp_i,         # PID controller proportional constant [0b01000000]
+                 pid_ki_i,         # PID controller integral constant [0b01000000]
+                 pid_kd_i,         # PID controller derivative constant [0]
+                 lock_cnt_i,       # FLL lock counter condition [0b1000]
+                 # Additional input parameters
+                 k_dco,            # DCO frequency resolution
+                 clk_dco_init):    # DCO initial frequency (dco_ctrl=0) 
+        """
+        Frequency-locked loop (FLL) is a negative feedback control system that locks the output
+        frequency signal to the target frequency. Principally, it continuously controls the
+        oscillator frequency in an automated way until its output frequency matches the target
+        value, after which that value is maintained at the output.
+        """
+        # Inputs from design
+        self.CW = CW
+        self.clk_ref_i = clk_ref_i 
+        self.clk_ref_en_i = clk_ref_en_i
+        self.rst_ni = rst_ni
+        self.clk_mult_i = clk_mult_i
+        self.dco_pwr_sel_i = dco_pwr_sel_i  
+        self.dco_ctrl_man_i = dco_ctrl_man_i
+        self.dco_ctrl_mode_i = dco_ctrl_mode_i 
+        self.pid_kp_i = pid_kp_i
+        self.pid_ki_i = pid_ki_i
+        self.pid_kd_i = pid_kd_i
+        self.lock_cnt_i = lock_cnt_i
+        # Additional input parameters
+        self.k_dco = k_dco
+        self.clk_dco_init = clk_dco_init
+        # Component instantiation
+        self.dco_inst = dco(k_dco=self.k_dco,
+                            init_freq=self.clk_dco_init)
+        self.cnt_inst = cnt()
+        self.pid_inst = pid(rst_ni=self.rst_ni,
+                            kp_i=self.pid_kp_i,
+                            ki_i=self.pid_ki_i,
+                            kd_i=self.pid_kd_i,
+                            setpoint_i=self.clk_mult_i,
+                            feedback_i=self.clk_dco_init//self.clk_ref_i,
+                            lock_cnt_i=self.lock_cnt_i)
+        # Outputs from design
+        self.lock_o = self.clk_dco_init//self.clk_ref_i == self.clk_mult_i
+        self.clk_dco_o = self.clk_dco_init
+
+    def run(self,
+            rst_ni):
+        self.rst_ni = rst_ni
+
+        # Convert control mode integer to binary array (1/0 integers) 
+        dco_ctrl_mode_bin_arr = list(map(int, list(bin(self.dco_ctrl_mode_i)[2:][::-1])))
+
+        # PID logic
+        self.pid_inst.feedback_i = self.clk_dco_o//self.clk_ref_i
+        self.pid_inst.run(rst_ni=self.rst_ni)
+        dco_ctrl_pid = self.pid_inst.ctrl_o
+
+        # Bang-bang logic
+        #cnt_en_i = 1  # used if you want frequency oscillation in the stable state
+        cnt_en_i = not self.pid_inst.lock_o if (self.clk_mult_i != self.clk_dco_o//self.clk_ref_i) else 0
+        cnt_up_down = 1 if (self.clk_mult_i > self.clk_dco_o//self.clk_ref_i) else 0
+        self.cnt_inst.run(rst_ni=self.rst_ni,
+                          en_i=cnt_en_i and dco_ctrl_mode_bin_arr[1],
+                          up_down_i=cnt_up_down)
+        dco_ctrl_cnt = self.cnt_inst.cnt_o
+
+        # Control preprocessing
+        dco_ctrl_man = self.dco_ctrl_man_i if (dco_ctrl_mode_bin_arr[0]) else 203
+        dco_ctrl_auto = dco_ctrl_pid if (dco_ctrl_mode_bin_arr[0]) else dco_ctrl_cnt
+        dco_ctrl = dco_ctrl_auto if (dco_ctrl_mode_bin_arr[1]) else dco_ctrl_man
+
+        # DCO logic
+        self.dco_inst.run(ctrl=dco_ctrl)
+
+        # FLL outputs setup
+        self.clk_dco_o = int(self.dco_inst.freq_out)
+        self.lock_o = self.pid_inst.lock_o
+\end{lstlisting}
+\begin{lstlisting}[language=Python, caption={Имплементација класе \PID\ контролера.}, label={lst:py:pid}]
+import copy
+
+INT_WIDTH = 8                             # width of output control signal
+FX_INT_WIDTH = 12                         # integer part width of PID sum (Q12.6)
+FX_DEC_WIDTH = 6                          # decimal part width of PID sum (Q12.6)
+CTRL_WIDTH = FX_INT_WIDTH + FX_DEC_WIDTH  # total width of PID sum
+
+class pid:
+    def __init__(self,
+                 rst_ni,
+                 kp_i,
+                 ki_i,
+                 kd_i,
+                 setpoint_i,
+                 feedback_i,
+                 lock_cnt_i):
+        self.rst_ni = rst_ni
+        self.kp_i = kp_i
+        self.ki_i = ki_i
+        self.kd_i = kd_i
+        self.setpoint_i = setpoint_i
+        self.feedback_i = feedback_i
+        self.lock_cnt_i = lock_cnt_i
+        self.ctrl_o = 0
+        self.lock_o = 0
+        self.err_eq0_cnt = 0
+        self.integ = 0
+        self.err = setpoint_i - feedback_i
+        self.err_prev = 0
+        self.ctrl_pid = 0
+
+    def run(self,
+            rst_ni):
+        self.rst_ni = rst_ni
+
+        if (not self.rst_ni):
+            self.err_eq0_cnt = 0
+        else:
+            if ((self.err == 0) and (self.err_eq0_cnt < self.lock_cnt_i)):
+                self.err_eq0_cnt += 1
+
+        prop = 0
+        # integ = 0
+        deriv = 0
+        self.err = self.setpoint_i - self.feedback_i
+        err_diff = self.err - self.err_prev
+
+        if (not self.rst_ni):
+            prop = 0
+            self.integ = 0
+            deriv = 0
+            self.err_prev = 0
+            self.ctrl_pid = 0
+            self.lock_o = 0
+        else:
+            prop = self.kp_i * self.err
+            self.integ += self.ki_i * self.err
+            deriv = self.kd_i * err_diff
+            self.err_prev = copy.deepcopy(self.err)
+            if ((self.err == 0) and (self.err_eq0_cnt == self.lock_cnt_i) and (self.lock_cnt_i != 0)):
+                self.lock_o = 1
+            if (not self.lock_o):
+                self.ctrl_pid = prop + self.integ + deriv
+
+        self.ctrl_o = int(format(int(self.ctrl_pid), '0'+str(CTRL_WIDTH)+'b')[FX_INT_WIDTH-INT_WIDTH:FX_INT_WIDTH], 2)
+\end{lstlisting}
+\begin{lstlisting}[language=Python, caption={Имплементација класе бројача bang-bang контролера.}, label={lst:py:cnt}]
+class cnt:
+    def __init__(self):
+        self.cnt_o = 0
+        self.default_val = 0
+
+    def run(self,
+            rst_ni,
+            en_i,
+            up_down_i):
+        if (not rst_ni):
+            self.cnt_o = self.default_val
+        else:    
+            if (en_i):
+                if (up_down_i):
+                    self.cnt_o += 1
+                else:
+                    self.cnt_o -= 1
+        return self.cnt_o
+\end{lstlisting}
+\begin{lstlisting}[language=Python, caption={Имплементација класе дигитално контролисаног осцилатора.}, label={lst:py:dco}]
+class dco:
+    def __init__(self,
+                 k_dco,
+                 init_freq):
+        self.k_dco = k_dco
+        self.init_freq = init_freq
+        self.freq_out = init_freq
+
+    def run(self,
+            ctrl):
+        self.freq_out = self.init_freq + self.k_dco * ctrl
+\end{lstlisting}
+
+\subsection{Поређење рада различитих управљачких режима} \label{section:python_model:pid_vs_cnt}
+У овом поглављу ће бити приказан одзив софтверског модела \FLL-а при раду у \PID\ и bang-bang управљачком режиму рада.
+\input{slike/py_pid_vs_cnt_1.tex}
+
+
+
+
+
+
+\subsection{Приказ утицаја \PID\ константи на одзив система} \label{section:python_model:pid_const}
 ...исправног одабира константи \PID\ контролера на одзив система, као и да помогну при грубом одабиру поменутих константи, а све у циљу добијања најбржег и најправилнијег одзива система у крајњој имплементацији.
 Слике~\ref{pid_kp_tuning},~\ref{pid_ki_tuning},~\ref{pid_kd_tuning} редом приказују утицај различитих вриједности константи $K_\text{p}$, $K_\text{i}$ и $K_\text{d}$ на брзину и начин достизања жељене фреквенције од 640\,MHz.   
 % TODO
@@ -1055,6 +1274,14 @@ endmodule
     	 \label{pid_kd_tuning}
 \end{figure}
 
+
+
+
+
+
+
+
+\section{Поређење \DCO-а пројектованих у 130nm и 180nm TSMC технологији}
 
 \section{Закључак} \label{Conclusion}
 У овом раду представљена је синтетизабилна дигитална фреквенцијски затворена петља са једноставном али ефикасном архитектуром. Дигитално контролисан осцилатор са прстенастом структуром, састављен од тростатичких инвертора омогућава достизање пристојне резолуције фреквенције и брзог радног учинка. Додатне предности су му и једноставно управљање, преносивост и прилагодљивост. Представљена су два управљачка режима \FLL-а: bang-bang контролер и \PID\ контролер. Детаљно је објашњена обрада у различитим доменима такта, као и заштита од метастабилности. \par

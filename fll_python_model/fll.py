@@ -71,7 +71,7 @@ class fll:
         dco_ctrl_pid = self.pid_inst.ctrl_o
 
         # Bang-bang logic
-        # cnt_en_i = 1 # if (self.clk_mult_i != self.clk_dco_o//self.clk_ref_i) else 0
+        #cnt_en_i = 1  # used if you want frequency oscillation in the stable state
         cnt_en_i = not self.pid_inst.lock_o if (self.clk_mult_i != self.clk_dco_o//self.clk_ref_i) else 0
         cnt_up_down = 1 if (self.clk_mult_i > self.clk_dco_o//self.clk_ref_i) else 0
         self.cnt_inst.run(rst_ni=self.rst_ni,

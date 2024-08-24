@@ -1,5 +1,9 @@
 import copy
 
+INT_WIDTH = 8                             # width of output control signal
+FX_INT_WIDTH = 12                         # integer part width of PID sum (Q12.6)
+FX_DEC_WIDTH = 6                          # decimal part width of PID sum (Q12.6)
+CTRL_WIDTH = FX_INT_WIDTH + FX_DEC_WIDTH  # total width of PID sum
 
 class pid:
     def __init__(self,
@@ -58,5 +62,5 @@ class pid:
             if (not self.lock_o):
                 self.ctrl_pid = prop + self.integ + deriv
 
-        self.ctrl_o = int(format(int(self.ctrl_pid), '018b')[4:12], 2)
+        self.ctrl_o = int(format(int(self.ctrl_pid), '0'+str(CTRL_WIDTH)+'b')[FX_INT_WIDTH-INT_WIDTH:FX_INT_WIDTH], 2)
 

@@ -1,8 +1,9 @@
 from fll import fll
 import matplotlib.pyplot as plt
 import numpy as np
+import tikzplotlib
 
-FLL_MAX_ITER = 120
+FLL_MAX_ITER = 250
 SUBPLOTS = 0
 
 def run_fll(fll_inst, fll_max_iter):
@@ -44,8 +45,8 @@ if __name__ == "__main__":
         pid_ki_i=16,
         pid_kd_i=0,
         lock_cnt_i=8,
-        k_dco=2.9*10**6,
-        clk_dco_init=30*10**6)  # output in MHz
+        k_dco=2.8*10**6,
+        clk_dco_init=42*10**6)  # output in MHz
 
     fll_data_1 = run_fll(fll_inst_1, FLL_MAX_ITER)
 
@@ -63,8 +64,8 @@ if __name__ == "__main__":
         pid_ki_i=16,
         pid_kd_i=0,
         lock_cnt_i=8,
-        k_dco=2.9*10**6,
-        clk_dco_init=30*10**6)  # output in MHz
+        k_dco=2.8*10**6,
+        clk_dco_init=42*10**6)  # output in MHz
 
     fll_data_2 = run_fll(fll_inst_2, FLL_MAX_ITER)
 
@@ -82,8 +83,8 @@ if __name__ == "__main__":
         pid_ki_i=16,
         pid_kd_i=0,
         lock_cnt_i=8,
-        k_dco=2.9*10**6,
-        clk_dco_init=30*10**6)  # output in MHz
+        k_dco=2.8*10**6,
+        clk_dco_init=42*10**6)  # output in MHz
 
     fll_data_3 = run_fll(fll_inst_3, FLL_MAX_ITER)
 
@@ -101,8 +102,8 @@ if __name__ == "__main__":
         pid_ki_i=16,
         pid_kd_i=0,
         lock_cnt_i=8,
-        k_dco=2.9*10**6,
-        clk_dco_init=30*10**6)  # output in MHz
+        k_dco=2.8*10**6,
+        clk_dco_init=42*10**6)  # output in MHz
 
     fll_data_4 = run_fll(fll_inst_4, FLL_MAX_ITER)
 
@@ -128,13 +129,13 @@ if __name__ == "__main__":
     str_ctrl_4 = fll_data_4["str_ctrl"]
 
     if (not SUBPLOTS):
-        #plt.step(list(range(cnt_loop_1)), freq_arr_1, where='pre', label=str_ctrl_1)
-        #plt.step(list(range(cnt_loop_2)), freq_arr_2, where='pre', label=str_ctrl_2 + ". Kp = " + str(fll_inst_2.pid_kp_i))
+        plt.step(list(range(cnt_loop_1)), freq_arr_1, where='pre', label=str_ctrl_1)
+        plt.step(list(range(cnt_loop_2)), freq_arr_2, where='pre', label=str_ctrl_2)
         #plt.step(list(range(cnt_loop_3)), freq_arr_3, where='pre', label=str_ctrl_3 + ". Kp = " + str(fll_inst_3.pid_kp_i))
         #plt.step(list(range(cnt_loop_4)), freq_arr_4, where='pre', label=str_ctrl_4 + ". Kp = " + str(fll_inst_4.pid_kp_i))
-        plt.step(list(range(cnt_loop_2)), freq_arr_2, where='pre', label="Kp = " + str(fll_inst_2.pid_kp_i) + ", Ki = " + str(fll_inst_2.pid_ki_i) + ", Kd = " + str(fll_inst_2.pid_kd_i))
-        plt.step(list(range(cnt_loop_3)), freq_arr_3, where='pre', label="Kp = " + str(fll_inst_3.pid_kp_i) + ", Ki = " + str(fll_inst_3.pid_ki_i) + ", Kd = " + str(fll_inst_3.pid_kd_i))
-        plt.step(list(range(cnt_loop_4)), freq_arr_4, where='pre', label="Kp = " + str(fll_inst_4.pid_kp_i) + ", Ki = " + str(fll_inst_4.pid_ki_i) + ", Kd = " + str(fll_inst_4.pid_kd_i))
+        #plt.step(list(range(cnt_loop_2)), freq_arr_2, where='pre', label="Kp = " + str(fll_inst_2.pid_kp_i) + ", Ki = " + str(fll_inst_2.pid_ki_i) + ", Kd = " + str(fll_inst_2.pid_kd_i))
+        #plt.step(list(range(cnt_loop_3)), freq_arr_3, where='pre', label="Kp = " + str(fll_inst_3.pid_kp_i) + ", Ki = " + str(fll_inst_3.pid_ki_i) + ", Kd = " + str(fll_inst_3.pid_kd_i))
+        #plt.step(list(range(cnt_loop_4)), freq_arr_4, where='pre', label="Kp = " + str(fll_inst_4.pid_kp_i) + ", Ki = " + str(fll_inst_4.pid_ki_i) + ", Kd = " + str(fll_inst_4.pid_kd_i))
         #plt.plot(list(range(cnt_loop_1)), freq_arr_1, label=str_ctrl_1)
         #plt.plot(list(range(cnt_loop_2)), freq_arr_2, label=str_ctrl_2)
         plt.xlabel("Број итерација")
@@ -144,7 +145,7 @@ if __name__ == "__main__":
         plt.grid()
     #    plt.tight_layout()
         plt.tick_params(labelsize=10)
-        plt.legend()
+       # plt.legend()
     else:
         plt.subplot(211)
         plt.step(list(range(cnt_loop_1)), freq_arr_1, where='pre', label=str_ctrl_1)
@@ -169,10 +170,12 @@ if __name__ == "__main__":
         plt.legend()
 
     plt.tight_layout()
-    figure = plt.gcf()  # get current figure
-    figure.set_size_inches(32, 18)   # set figure's size manually to your full screen (32x18)
-#     plt.savefig("results/bang_bang_vs_pid.png", bbox_inches='tight', dpi=300)  # bbox_inches removes extra white spaces
-    plt.savefig("results/bang_bang_vs_pid.png", bbox_inches='tight')  # bbox_inches removes extra white spaces
+    #$figure = plt.gcf()  # get current figure
+    #figure.set_size_inches(32, 18)   # set figure's size manually to your full screen (32x18)
+    #plt.savefig("results/pid_vs_cnt.png", bbox_inches='tight', dpi=300)  # bbox_inches removes extra white spaces
+    #plt.savefig("results/bang_bang_vs_pid.png", bbox_inches='tight')  # bbox_inches removes extra white spaces
     manager = plt.get_current_fig_manager()
     manager.window.showMaximized()
-    plt.show()
+    #plt.show()
+    tikzplotlib.save("results/sim_py_pid_vs_cnt.tex", dpi=300) 
+    plt.close()
