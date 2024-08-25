@@ -1,0 +1,249 @@
+\begin{figure*}[!ht]%[!b]
+    \centering
+
+    \begin{tikzpicture}[scale=1]
+    \pgfplotsset{%
+        width=15.5cm,
+        height=7.185cm
+        %height=7.728cm
+	%height=10cm
+    }
+    
+    \definecolor{darkgray176}{RGB}{176,176,176}
+    \definecolor{darkorange25512714}{RGB}{255,127,14}
+    \definecolor{forestgreen4416044}{RGB}{44,160,44}
+    \definecolor{steelblue31119180}{RGB}{31,119,180}
+    
+    \begin{axis}[
+    tick align=outside,
+    tick pos=left,
+    x grid style={darkgray176},
+    xlabel={Број итерација},
+    xmajorgrids,
+    xmin=0, xmax=60,
+    xtick style={color=black},
+    y grid style={darkgray176},
+    ylabel={Фреквенција осциловања [MHz]},
+    ymajorgrids,
+    ymin=150, ymax=660,
+    ytick style={color=black},
+    %
+    %ytick={0,0.2,...,1.2},
+    xlabel style={align=center,text width=8cm},
+    line width = 1pt,
+    x axis line style = {line width=0.2pt},
+    y axis line style = {line width=0.2pt},
+    x grid style = {line width=0.2pt},
+    y grid style = {line width=0.2pt},
+    %legend pos=north west,
+    %legend style={legend image post style={mark options={scale=0.7}}, cells={anchor=west}, at={(0.69,1)}, font=\tiny, line width=0.5pt, legend reversed=true},
+    legend style={legend image post style={scale=0.82}, cells={anchor=west}, at={(1.0,0.239)}, font=\scriptsize, line width=0.5pt, legend reversed=true},
+    tick label style={font=\footnotesize},
+    label style={font=\footnotesize}
+    ]
+    %\addplot [steelblue31119180, mark=*, mark options={scale=0.5, mark repeat=15}]
+    %\addplot [steelblue31119180, solid]
+    \addplot [semithick, steelblue31119180, const plot mark right]
+    table {%
+    0 142.8
+    1 226.8
+    2 294
+    3 352.8
+    4 400.4
+    5 439.6
+    6 473.2
+    7 501.2
+    8 523.6
+    9 546
+    10 560
+    11 574
+    12 588
+    13 596.4
+    14 604.8
+    15 613.2
+    16 618.8
+    17 624.4
+    18 627.2
+    19 630
+    20 630
+    21 632.8
+    22 635.6
+    23 638.4
+    24 641.2
+    25 641.2
+    26 641.2
+    27 641.2
+    28 641.2
+    29 641.2
+    30 641.2
+    31 641.2
+    32 641.2
+    33 641.2
+    34 641.2
+    35 641.2
+    36 641.2
+    37 641.2
+    38 641.2
+    39 641.2
+    40 641.2
+    41 641.2
+    42 641.2
+    43 641.2
+    44 641.2
+    45 641.2
+    46 641.2
+    47 641.2
+    48 641.2
+    49 641.2
+    50 641.2
+    51 641.2
+    52 641.2
+    53 641.2
+    54 641.2
+    55 641.2
+    56 641.2
+    57 641.2
+    58 641.2
+    59 641.2
+    60 641.2
+    };
+    \addlegendentry{\P=0.5, \I=15, \D=0}
+    %\addlegendentry{$K_\text{p}\text{=}64, K_\text{i}\text{=}64, K_\text{d}\text{=}64$}
+    %\addplot [darkorange25512714, mark=square*, mark options={scale=0.5, mark repeat=15}]
+    \addplot [semithick, darkorange25512714, const plot mark right]
+    table {%
+    0 240.8
+    1 271.6
+    2 333.2
+    3 375.2
+    4 411.6
+    5 445.2
+    6 473.2
+    7 498.4
+    8 515.2
+    9 534.8
+    10 548.8
+    11 562.8
+    12 574
+    13 588
+    14 593.6
+    15 599.2
+    16 607.6
+    17 616
+    18 618.8
+    19 624.4
+    20 624.4
+    21 627.2
+    22 630
+    23 630
+    24 632.8
+    25 635.6
+    26 638.4
+    27 641.2
+    28 638.4
+    29 644
+    30 641.2
+    31 641.2
+    32 641.2
+    33 641.2
+    34 641.2
+    35 641.2
+    36 641.2
+    37 641.2
+    38 641.2
+    39 641.2
+    40 641.2
+    41 641.2
+    42 641.2
+    43 641.2
+    44 641.2
+    45 641.2
+    46 641.2
+    47 641.2
+    48 641.2
+    49 641.2
+    50 641.2
+    51 641.2
+    52 641.2
+    53 641.2
+    54 641.2
+    55 641.2
+    56 641.2
+    57 641.2
+    58 641.2
+    59 641.2
+    60 641.2
+    };
+    \addlegendentry{\P=15, \I=15, \D=0}
+    %\addlegendentry{$K_\text{p}\text{=}64, K_\text{i}\text{=}64, K_\text{d}\text{=}64$}
+    %\addplot [forestgreen4416044, mark=triangle*, mark options={scale=0.5, mark repeat=15}]
+    \addplot [semithick, forestgreen4416044, const plot mark right]
+    table {%
+    0 560
+    1 210
+    2 520.8
+    3 333.2
+    4 518
+    5 406
+    6 523.6
+    7 467.6
+    8 529.2
+    9 504
+    10 548.8
+    11 532
+    12 562.8
+    13 551.6
+    14 579.6
+    15 568.4
+    16 590.8
+    17 590.8
+    18 602
+    19 599.2
+    20 607.6
+    21 613.2
+    22 607.6
+    23 627.2
+    24 607.6
+    25 638.4
+    26 618.8
+    27 635.6
+    28 627.2
+    29 630
+    30 632.8
+    31 635.6
+    32 638.4
+    33 638.4
+    34 641.2
+    35 630
+    36 644
+    37 632.8
+    38 646.8
+    39 635.6
+    40 649.6
+    41 638.4
+    42 652.4
+    43 641.2
+    44 641.2
+    45 641.2
+    46 641.2
+    47 641.2
+    48 641.2
+    49 641.2
+    50 641.2
+    51 641.2
+    52 641.2
+    53 641.2
+    54 641.2
+    55 641.2
+    56 641.2
+    57 641.2
+    58 641.2
+    59 641.2
+    60 641.2
+    };
+    \addlegendentry{\P=63, \I=15, \D=0}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Одзив модела за различите вриједности пропорционалне константе \PID\ контролера.}
+    \label{fig:py:pid_kp_tuning}
+\end{figure*}

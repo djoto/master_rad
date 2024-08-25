@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import tikzplotlib
 
-FLL_MAX_ITER = 250
+FLL_MAX_ITER = 350
 SUBPLOTS = 0
 
 def run_fll(fll_inst, fll_max_iter):
@@ -41,8 +41,8 @@ if __name__ == "__main__":
         dco_pwr_sel_i=0,  # 1->VDD, 0->VDDL
         dco_ctrl_man_i=200,
         dco_ctrl_mode_i=2,  # 2->CNT, 3->PID
-        pid_kp_i=16,
-        pid_ki_i=16,
+        pid_kp_i=60,
+        pid_ki_i=60,
         pid_kd_i=0,
         lock_cnt_i=8,
         k_dco=2.8*10**6,
@@ -59,12 +59,12 @@ if __name__ == "__main__":
         clk_mult_i=40,
         dco_pwr_sel_i=0,  # 1->VDD, 0->VDDL
         dco_ctrl_man_i=200,
-        dco_ctrl_mode_i=3,  # 2->CNT, 3->PID
-        pid_kp_i=16,
-        pid_ki_i=16,
+        dco_ctrl_mode_i=2,  # 2->CNT, 3->PID
+        pid_kp_i=60,  # 2=0.5
+        pid_ki_i=60,  # 16=4 
         pid_kd_i=0,
         lock_cnt_i=8,
-        k_dco=2.8*10**6,
+        k_dco=1.8*10**6,
         clk_dco_init=42*10**6)  # output in MHz
 
     fll_data_2 = run_fll(fll_inst_2, FLL_MAX_ITER)
@@ -78,9 +78,9 @@ if __name__ == "__main__":
         clk_mult_i=40,
         dco_pwr_sel_i=0,  # 1->VDD, 0->VDDL
         dco_ctrl_man_i=200,
-        dco_ctrl_mode_i=3,  # 2->CNT, 3->PID
-        pid_kp_i=1,
-        pid_ki_i=16,
+        dco_ctrl_mode_i=2,  # 2->CNT, 3->PID
+        pid_kp_i=60,  # 60=15
+        pid_ki_i=60,  # 60=15
         pid_kd_i=0,
         lock_cnt_i=8,
         k_dco=2.8*10**6,
@@ -97,12 +97,12 @@ if __name__ == "__main__":
         clk_mult_i=40,
         dco_pwr_sel_i=0,  # 1->VDD, 0->VDDL
         dco_ctrl_man_i=200,
-        dco_ctrl_mode_i=3,  # 2->CNT, 3->PID
-        pid_kp_i=64,
-        pid_ki_i=16,
+        dco_ctrl_mode_i=2,  # 2->CNT, 3->PID
+        pid_kp_i=60,  # 252=63
+        pid_ki_i=60, # 108=27
         pid_kd_i=0,
         lock_cnt_i=8,
-        k_dco=2.8*10**6,
+        k_dco=4.2*10**6,
         clk_dco_init=42*10**6)  # output in MHz
 
     fll_data_4 = run_fll(fll_inst_4, FLL_MAX_ITER)
@@ -129,13 +129,13 @@ if __name__ == "__main__":
     str_ctrl_4 = fll_data_4["str_ctrl"]
 
     if (not SUBPLOTS):
-        plt.step(list(range(cnt_loop_1)), freq_arr_1, where='pre', label=str_ctrl_1)
-        plt.step(list(range(cnt_loop_2)), freq_arr_2, where='pre', label=str_ctrl_2)
+        #plt.step(list(range(cnt_loop_1)), freq_arr_1, where='pre', label=str_ctrl_1)
+        #plt.step(list(range(cnt_loop_2)), freq_arr_2, where='pre', label=str_ctrl_2)
         #plt.step(list(range(cnt_loop_3)), freq_arr_3, where='pre', label=str_ctrl_3 + ". Kp = " + str(fll_inst_3.pid_kp_i))
         #plt.step(list(range(cnt_loop_4)), freq_arr_4, where='pre', label=str_ctrl_4 + ". Kp = " + str(fll_inst_4.pid_kp_i))
-        #plt.step(list(range(cnt_loop_2)), freq_arr_2, where='pre', label="Kp = " + str(fll_inst_2.pid_kp_i) + ", Ki = " + str(fll_inst_2.pid_ki_i) + ", Kd = " + str(fll_inst_2.pid_kd_i))
-        #plt.step(list(range(cnt_loop_3)), freq_arr_3, where='pre', label="Kp = " + str(fll_inst_3.pid_kp_i) + ", Ki = " + str(fll_inst_3.pid_ki_i) + ", Kd = " + str(fll_inst_3.pid_kd_i))
-        #plt.step(list(range(cnt_loop_4)), freq_arr_4, where='pre', label="Kp = " + str(fll_inst_4.pid_kp_i) + ", Ki = " + str(fll_inst_4.pid_ki_i) + ", Kd = " + str(fll_inst_4.pid_kd_i))
+        plt.step(list(range(cnt_loop_2)), freq_arr_2, where='pre', label="Kp = " + str(fll_inst_2.pid_kp_i) + ", Ki = " + str(fll_inst_2.pid_ki_i) + ", Kd = " + str(fll_inst_2.pid_kd_i) + ", K_DCO = " + str(fll_inst_2.dco_inst.k_dco))
+        plt.step(list(range(cnt_loop_3)), freq_arr_3, where='pre', label="Kp = " + str(fll_inst_3.pid_kp_i) + ", Ki = " + str(fll_inst_3.pid_ki_i) + ", Kd = " + str(fll_inst_3.pid_kd_i) + ", K_DCO = " + str(fll_inst_3.dco_inst.k_dco))
+        plt.step(list(range(cnt_loop_4)), freq_arr_4, where='pre', label="Kp = " + str(fll_inst_4.pid_kp_i) + ", Ki = " + str(fll_inst_4.pid_ki_i) + ", Kd = " + str(fll_inst_4.pid_kd_i) + ", K_DCO = " + str(fll_inst_4.dco_inst.k_dco))
         #plt.plot(list(range(cnt_loop_1)), freq_arr_1, label=str_ctrl_1)
         #plt.plot(list(range(cnt_loop_2)), freq_arr_2, label=str_ctrl_2)
         plt.xlabel("Број итерација")
@@ -145,7 +145,7 @@ if __name__ == "__main__":
         plt.grid()
     #    plt.tight_layout()
         plt.tick_params(labelsize=10)
-       # plt.legend()
+      #  plt.legend()
     else:
         plt.subplot(211)
         plt.step(list(range(cnt_loop_1)), freq_arr_1, where='pre', label=str_ctrl_1)

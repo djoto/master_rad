@@ -1,27 +1,48 @@
-% This file was created with tikzplotlib v0.10.1.
-\begin{tikzpicture}
-
-\definecolor{darkgray176}{RGB}{176,176,176}
-\definecolor{darkorange25512714}{RGB}{255,127,14}
-\definecolor{forestgreen4416044}{RGB}{44,160,44}
-\definecolor{steelblue31119180}{RGB}{31,119,180}
-
-\begin{axis}[
-tick align=outside,
-tick pos=left,
-x grid style={darkgray176},
-xlabel={Број итерација},
-xmajorgrids,
-xmin=-17.5, xmax=367.5,
-xtick style={color=black},
-y grid style={darkgray176},
-ylabel={Фреквенција осциловања [MHz]},
-ymajorgrids,
-ymin=0, ymax=672.54,
-ytick style={color=black}
-]
-\addplot [semithick, steelblue31119180, const plot mark right]
-table {%
+\begin{figure*}[!ht]%[!b]
+    \centering
+    
+    \begin{tikzpicture}[scale=1]
+    \pgfplotsset{%
+        width=15.5cm,
+        height=10cm
+    }
+    
+    \definecolor{darkgray176}{RGB}{176,176,176}
+    \definecolor{darkorange25512714}{RGB}{255,127,14}
+    \definecolor{forestgreen4416044}{RGB}{44,160,44}
+    \definecolor{steelblue31119180}{RGB}{31,119,180}
+    
+    \begin{axis}[
+    tick align=outside,
+    tick pos=left,
+    x grid style={darkgray176},
+    xlabel={Број итерација},
+    xmajorgrids,
+    xmin=0, xmax=350,
+    xtick style={color=black},
+    y grid style={darkgray176},
+    ylabel={Фреквенција осциловања [MHz]},
+    ymajorgrids,
+    ymin=0, ymax=650,
+    ytick style={color=black},
+    %
+    %ytick={0,0.2,...,1.2},
+    xlabel style={align=center,text width=8cm},
+    line width = 1pt,
+    x axis line style = {line width=0.2pt},
+    y axis line style = {line width=0.2pt},
+    x grid style = {line width=0.2pt},
+    y grid style = {line width=0.2pt},
+    %legend pos=north west,
+    %legend style={legend image post style={mark options={scale=0.7}}, cells={anchor=west}, at={(0.69,1)}, font=\tiny, line width=0.5pt, legend reversed=true},
+    legend style={legend image post style={scale=0.82}, cells={anchor=west}, at={(1.0,0.16)}, font=\scriptsize, line width=0.5pt, legend reversed=true},
+    tick label style={font=\footnotesize},
+    label style={font=\footnotesize}
+    ]
+    %\addplot [steelblue31119180, mark=*, mark options={scale=0.5, mark repeat=15}]
+    %\addplot [steelblue31119180, solid]
+    \addplot [semithick, steelblue31119180, const plot mark right]
+    table {%
     0 43.8
     1 45.6
     2 47.4
@@ -373,9 +394,12 @@ table {%
     348 641.4
     349 639.6
     350 641.4
-};
-\addplot [semithick, darkorange25512714, const plot mark right]
-table {%
+    };
+    \addlegendentry{$K_\text{\scalebox{.8}{DCO}}$=1.8\,MHz, $f_\text{\scalebox{.8}{OSC}}$ у стабилном стању: 639.6\,MHz до 641.4\,MHz}
+    %\addlegendentry{$K_\text{p}\text{=}64, K_\text{i}\text{=}64, K_\text{d}\text{=}64$}
+    %\addplot [darkorange25512714, mark=square*, mark options={scale=0.5, mark repeat=15}]
+    \addplot [semithick, darkorange25512714, const plot mark right]
+    table {%
     0 44.8
     1 47.6
     2 50.4
@@ -727,9 +751,12 @@ table {%
     348 638.4
     349 641.2
     350 638.4
-};
-\addplot [semithick, forestgreen4416044, const plot mark right]
-table {%
+    };
+    \addlegendentry{$K_\text{\scalebox{.8}{DCO}}$=2.8\,MHz, $f_\text{\scalebox{.8}{OSC}}$ у стабилном стању: 638.4\,MHz до 641.2\,MHz}
+    %\addlegendentry{$K_\text{p}\text{=}64, K_\text{i}\text{=}64, K_\text{d}\text{=}64$}
+    %\addplot [forestgreen4416044, mark=triangle*, mark options={scale=0.5, mark repeat=15}]
+    \addplot [semithick, forestgreen4416044, const plot mark right]
+    table {%
     0 46.2
     1 50.4
     2 54.6
@@ -1081,7 +1108,10 @@ table {%
     348 642.6
     349 638.4
     350 642.6
-};
-\end{axis}
-
-\end{tikzpicture}
+    };
+    \addlegendentry{$K_\text{\scalebox{.8}{DCO}}$=4.2\,MHz, $f_\text{\scalebox{.8}{OSC}}$ у стабилном стању: 638.4\,MHz до 642.6\,MHz}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Моделован одзив система за различите вриједности резолуције, $K_\text{DCO}$.}
+    \label{fig:py:kdco_tuning}
+\end{figure*}
