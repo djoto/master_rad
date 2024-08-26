@@ -59,7 +59,7 @@ if __name__ == "__main__":
         clk_mult_i=40,
         dco_pwr_sel_i=0,  # 1->VDD, 0->VDDL
         dco_ctrl_man_i=200,
-        dco_ctrl_mode_i=2,  # 2->CNT, 3->PID
+        dco_ctrl_mode_i=3,  # 2->CNT, 3->PID
         pid_kp_i=60,  # 2=0.5
         pid_ki_i=60,  # 16=4 
         pid_kd_i=0,
@@ -78,7 +78,7 @@ if __name__ == "__main__":
         clk_mult_i=40,
         dco_pwr_sel_i=0,  # 1->VDD, 0->VDDL
         dco_ctrl_man_i=200,
-        dco_ctrl_mode_i=2,  # 2->CNT, 3->PID
+        dco_ctrl_mode_i=3,  # 2->CNT, 3->PID
         pid_kp_i=60,  # 60=15
         pid_ki_i=60,  # 60=15
         pid_kd_i=0,
@@ -97,7 +97,7 @@ if __name__ == "__main__":
         clk_mult_i=40,
         dco_pwr_sel_i=0,  # 1->VDD, 0->VDDL
         dco_ctrl_man_i=200,
-        dco_ctrl_mode_i=2,  # 2->CNT, 3->PID
+        dco_ctrl_mode_i=3,  # 2->CNT, 3->PID
         pid_kp_i=60,  # 252=63
         pid_ki_i=60, # 108=27
         pid_kd_i=0,
@@ -136,6 +136,9 @@ if __name__ == "__main__":
         plt.step(list(range(cnt_loop_2)), freq_arr_2, where='pre', label="Kp = " + str(fll_inst_2.pid_kp_i) + ", Ki = " + str(fll_inst_2.pid_ki_i) + ", Kd = " + str(fll_inst_2.pid_kd_i) + ", K_DCO = " + str(fll_inst_2.dco_inst.k_dco))
         plt.step(list(range(cnt_loop_3)), freq_arr_3, where='pre', label="Kp = " + str(fll_inst_3.pid_kp_i) + ", Ki = " + str(fll_inst_3.pid_ki_i) + ", Kd = " + str(fll_inst_3.pid_kd_i) + ", K_DCO = " + str(fll_inst_3.dco_inst.k_dco))
         plt.step(list(range(cnt_loop_4)), freq_arr_4, where='pre', label="Kp = " + str(fll_inst_4.pid_kp_i) + ", Ki = " + str(fll_inst_4.pid_ki_i) + ", Kd = " + str(fll_inst_4.pid_kd_i) + ", K_DCO = " + str(fll_inst_4.dco_inst.k_dco))
+        #plt.step(list(range(cnt_loop_2)), freq_arr_2, where='pre', label="K_DCO = " + str(fll_inst_2.dco_inst.k_dco))
+        #plt.step(list(range(cnt_loop_3)), freq_arr_3, where='pre', label="K_DCO = " + str(fll_inst_3.dco_inst.k_dco))
+        #plt.step(list(range(cnt_loop_4)), freq_arr_4, where='pre', label="K_DCO = " + str(fll_inst_4.dco_inst.k_dco))
         #plt.plot(list(range(cnt_loop_1)), freq_arr_1, label=str_ctrl_1)
         #plt.plot(list(range(cnt_loop_2)), freq_arr_2, label=str_ctrl_2)
         plt.xlabel("Број итерација")
@@ -145,7 +148,7 @@ if __name__ == "__main__":
         plt.grid()
     #    plt.tight_layout()
         plt.tick_params(labelsize=10)
-      #  plt.legend()
+        plt.legend()
     else:
         plt.subplot(211)
         plt.step(list(range(cnt_loop_1)), freq_arr_1, where='pre', label=str_ctrl_1)
@@ -176,6 +179,6 @@ if __name__ == "__main__":
     #plt.savefig("results/bang_bang_vs_pid.png", bbox_inches='tight')  # bbox_inches removes extra white spaces
     manager = plt.get_current_fig_manager()
     manager.window.showMaximized()
-    #plt.show()
-    tikzplotlib.save("results/sim_py_pid_vs_cnt.tex", dpi=300) 
-    plt.close()
+    plt.show()
+    #tikzplotlib.save("results/sim_py_pid_vs_cnt.tex", dpi=300) 
+    #plt.close()
