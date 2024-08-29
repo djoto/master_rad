@@ -1,0 +1,35 @@
+\begin{figure}[!ht]
+    \centering
+    %\vspace{0.5cm}
+    \begin{tikzpicture}
+    \begin{axis}[
+        axis lines=middle,
+        xlabel={$x$},
+        ylabel={$u(x)$},
+        ymin=-0.1, ymax=1.1,
+        xmin=-4, xmax=4,
+        xtick={0},
+        ytick={0,1},
+        every axis x label/.style={
+            at={(current axis.right of origin)}, anchor=west,
+        },
+        every axis y label/.style={
+            at={(current axis.above origin)}, anchor=south,
+        },
+        ]
+        \addplot[domain=-4:0,very thick,samples=2] {0}; % Plot for x < 0
+        \addplot[domain=0:4,very thick,samples=2] {1}; % Plot for x > 0
+        
+        % Draw a vertical dashed line at x = 0
+        \draw[dashed,very thick] (axis cs:0,0) -- (axis cs:0,1);
+        
+        % Optional: add open circle at (0,0)
+        %\addplot[thick,only marks,mark=*,mark options={fill=white}] coordinates {(0,0)};
+        % Optional: add filled circle at (0,1)
+        %\addplot[thick,only marks,mark=*] coordinates {(0,1)};
+    \end{axis}
+    \end{tikzpicture}
+    %\vspace{0.5cm}
+    \caption{График Хевисајдове функције.}
+    \label{heaviside}
+\end{figure}
