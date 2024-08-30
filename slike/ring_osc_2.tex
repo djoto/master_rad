@@ -1,0 +1,23 @@
+\begin{figure}[!ht]
+    \centering
+    \vspace{0.2cm}
+
+    \begin{tikzpicture}[scale=1]
+    \ctikzset{tripoles/mos style/arrows}
+    \ctikzset{tripoles/pmos style/emptycircle}
+    \ctikzset{logic ports=ieee}
+
+    \draw 
+    (0,0) --++ (0,0.5) to[R, l=$R_D$] (0,2) |-++ (-1,0.5) node[ground, rotate=-90] {}
+    (0,0) -|++ (-1.5,-0.5) to[R, l_=$\dfrac{1}{g_m}$] (-1.5,-2) --++ (0,-0.2) node[ground] {}
+    (0,0) -|++ (1.5,-0.5) to[C, l_=$C_L$] (1.5,-2) --++ (0,-0.2) node[ground] {}
+    (0,0) node[circ] {}
+    (2.0,-1.25) node[anchor=west] (V0) {$V_0$}
+    (1.7,-0.8) node[anchor=west] {$+$}
+    (1.7,-1.7) node[anchor=west] {$-$};
+
+    \end{tikzpicture}
+    \vspace{0.2cm}
+    \caption{Еквивалентно коло једног степена у петљи.}
+    \label{ring_osc_2}
+\end{figure}

@@ -1,0 +1,23 @@
+\begin{figure}[!ht]
+    \centering
+    \vspace{0.5cm}
+    \begin{tikzpicture}[auto, >=triangle 45]
+    
+    \node [draw, rectangle, thick, minimum width=1.5cm, minimum height=1cm] (block) {$H(s)$};
+    \node [draw, circle, minimum size=0.15cm, left of=block, inner sep=0, node distance=2.5cm] (circin) {};
+    \node [draw, circle, minimum size=0.15cm, right of=block, inner sep=0, node distance=2.5cm] (circout) {};
+    
+    \node [above left of=circin, node distance=1.2cm] (omegain) {$\omega_{0}$};
+    \node [above right of=circout, node distance=1.2cm] (omegaout) {$\omega_{0}$};
+
+    \draw (-3.8,0) sin (-3.6,-0.4) cos (-3.4,0) sin (-3.2,0.4) cos (-3,0);
+    \draw (3,0) sin (3.2,0.4) cos (3.4,0) sin (3.6,-0.4) cos (3.8,0);
+
+    \draw[->] (circin) -- (block);
+    \draw[-] (block) -- (circout);
+    \end{tikzpicture}
+
+    \vspace{0.3cm}
+    \caption{Инверзија сигнала на фреквенцији $\omega_{0}$.}
+    \label{osc_feedback_3}
+\end{figure}

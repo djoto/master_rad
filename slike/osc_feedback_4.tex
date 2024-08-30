@@ -1,0 +1,37 @@
+\begin{figure}[!ht]
+    \centering
+    \vspace{0.5cm}
+    \begin{tikzpicture}[auto, >=triangle 45]
+    
+    \node [draw, circle, thick, minimum size=0.8cm, inner sep=0] (sum) {$+$};
+    \node [draw, circle, thick, minimum size=0.5cm, below of=sum, node distance=2.5cm, inner sep=0] (circvt) {};
+    \node [draw, rectangle, thick, minimum width=1.5cm, minimum height=1cm, right of=sum, node distance=3cm] (block) {$H(s)$};
+    \node [right of=block, node distance=2cm] (out) {};
+    \node [below of=out, node distance=2.5cm] (out1) {};
+    \node [left of=out1, node distance=1.5cm] (out2) {};
+    \node [draw, ground, below left of=sum, node distance=2cm] (gnd1) {};
+    \node [draw, ground, below of=circvt, node distance=0.5cm] (gnd2) {};
+    \node [left of=circvt, node distance=0.6cm] {$V_{t}$};
+    \node [right of=circvt, node distance=1.1cm] {$A\sin\omega_{0}t$};
+    \node [below right of=out2, node distance=0.5cm] {$A\sin\omega_{0}t$};
+    \node [below right of=sum, node distance=1.2cm] {$180^{\circ}$};
+    \node [above of=block, node distance=1.2cm] {$180^{\circ}$};
+
+    \draw (0.8,0.6) sin (1,0.2) cos (1.2,0.6) sin (1.4,1) cos (1.6,0.6);
+    \draw (0.8,-1.8) sin (1,-1.4) cos (1.2,-1.8) sin (1.4,-2.2) cos (1.6,-1.8);
+    \draw (4.2,0.6) sin (4.4,1) cos (4.6,0.6) sin (4.8,0.2) cos (5,0.6);
+
+    \draw[->,dashed,rotate=-90] (1.5,0.6) arc[start angle=-60, end angle=-120, radius=2.2];
+    \draw[->,dashed, rotate=180] (-2,-0.65) arc[start angle=-60, end angle=-120, radius=2];
+
+    \draw[->] (gnd1) |- node [pos=0.9] {\scriptsize $+$} (sum);
+    \draw[-] (gnd2) -- node [pos=0.6] {\scriptsize $-$} (circvt);
+    \draw[->] (circvt) -- node [pos=0.1] {\scriptsize $+$} node [pos=0.9] {\scriptsize $-$} (sum);
+    \draw[->] (sum) -- (block);
+    \draw[-] (block) -- (out.center) -- (out1.center);
+    \draw[->] (out1.center) -- (out2.center);
+    \end{tikzpicture}
+    %\vspace{0.5cm}
+    \caption{Пропагација синусоиде кроз петљу на фреквенцији $\omega_{0}$.}
+    \label{osc_feedback_4}
+\end{figure}
