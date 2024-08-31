@@ -1,0 +1,49 @@
+\begin{figure}[!ht]
+    \centering
+    %\vspace{0.5cm}
+
+    \subfloat[]{
+    \begin{tikzpicture}[>=triangle 45, scale=1.5]
+    
+    % Ideal Oscillator
+    \draw[->, thick] (0,0) -- (2.4,0) node[right] {$\omega$};
+    \draw[->, thick] (1.2,0) -- (1.2,3) node[above] {$S_v(\omega)$};
+    %\draw[thick] (1,0) -- (1,1.8);
+    \node at (1.2,-0.3) {$\omega_c$};
+    \node at (1.2,3.7) {Идеалан осцилатор};
+
+    \end{tikzpicture}
+    \label{fig:osc:noise_1a}
+    }
+    \hspace{1.5cm}
+    \subfloat[]{
+    \begin{tikzpicture}[>=triangle 45, scale=1.5]
+    
+    % Practical Oscillator
+    \draw[->, thick] (0,0) -- (4,0) node[right] {$\omega$};
+    \draw[->, thick] (2,0) -- (2,3) node[above] {$S_v(\omega)$};
+    
+    % Drawing the curve
+    \draw[thick] plot[domain=0.5:3.5, samples=100] (\x, {0.2 + 2.5*exp(-4*(\x-2)^2)});
+    
+    % Vertical line at wc
+    % \draw[dashed, thick] (2,0) -- (2,2);
+
+    \draw[-] (2.8,0) -- (2.8,0.8); 
+    \draw[-] (2.85,0) -- (2.85,0.8); 
+
+    % Delta omega and bandwidth labels
+    \draw[<->] (2,0.7) -- node[midway, below] {$\Delta \omega$} (2.8,0.7);
+    \draw[->] (3.4,0.6) -- node[near start, above, anchor=south west] {Опсег од 1\,Hz} (2.87,0.1);
+
+    % Omega_c label
+    \node at (2,-0.3) {$\omega_c$};
+    \node at (2,3.7) {Реалан осцилатор};
+    
+    \end{tikzpicture}
+    \label{fig:osc:noise_1b}
+    }
+    %\vspace{0.5cm}
+    \caption{Излазни спектар (а) идеалног и (б) реалног осцилатора.}
+    \label{fig:osc:noise_1}
+\end{figure}

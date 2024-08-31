@@ -1,0 +1,20 @@
+\begin{figure}[!ht]
+    \centering
+    \vspace{0.3cm}
+    \begin{tikzpicture}[>=triangle 45]
+    
+    \draw[->, thick] (0,0) -- (11,0) node[right] {$\log (\Delta \omega)$};
+    \draw[->, thick] (0,0) -- (0,6) node[above] {$\mathcal{L}(\Delta \omega)$};
+    \draw[-, thick] (0.5,5.6) -- (2.5, 3.5) -- (8,0.5) -- (10,0.5);
+
+    \node[anchor=south west] at (1.5, 4.5) {$\dfrac{1}{\omega^3}=30\,\text{dBc/dec}$};
+    \node[anchor=south] at (6.1,2.5) {$\dfrac{1}{\omega^2}=20\,\text{dBc/dec}$};
+    \node[anchor=south west] at (8, 0.6) {$\dfrac{1}{\omega^0}=0\,\text{dBc/dec}$};
+    
+    \node[anchor=south west] at (0.3, 0.3) {log-log дијаграм};
+    
+    \end{tikzpicture}
+    %\vspace{0.5cm}
+    \caption{Спектар фазног шума реалног осцилатора.}
+    \label{fig:osc:noise_2}
+\end{figure}
