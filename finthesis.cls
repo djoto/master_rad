@@ -40,7 +40,7 @@
 \RequirePackage{varwidth}
 \RequirePackage{listings}
 \RequirePackage{datetime2}
-\RequirePackage[style=numeric, sorting=none, defernumbers]{biblatex}
+\RequirePackage[style=numeric, sorting=none, defernumbers, maxbibnames=10]{biblatex} % added maxbibnames=10
 \RequirePackage{csquotes}
 \RequirePackage[dvipsnames]{xcolor}
 \if@usehyperref%
