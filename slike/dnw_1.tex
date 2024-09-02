@@ -1,0 +1,55 @@
+\begin{figure}[!ht]
+    \centering
+    \vspace{-0.1cm}
+    \begin{tikzpicture}
+
+    % P substrate
+    \node[draw, rectangle, fill=red!20, minimum height=3cm, minimum width=15cm, inner sep=0] (psub) at (0,-1.5) {};
+
+    % N well
+    \node[draw, rectangle, fill=yellow!30, minimum height=1.3cm, minimum width=6cm, inner sep=0] (nwell) at (-4,-0.65) {};
+
+    % PMOS Source/Drain (P+ diffusion)
+    \node[draw, rectangle, fill=red!60, minimum height=0.5cm, minimum width=1cm, inner sep=0] (psource) at (-6.0,-0.25) {\scriptsize p\,\tiny $+$};
+    \node[draw, rectangle, fill=red!60, minimum height=0.5cm, minimum width=1cm, inner sep=0] (pdrain) at (-4.0,-0.25) {\scriptsize p\,\tiny $+$};
+
+    % NMOS Source/Drain (N+ diffusion)
+    \draw[fill=yellow!60] (3.5,0) rectangle (4.5,-0.5); % NMOS source
+    \node[draw, rectangle, fill=yellow!60, minimum height=0.5cm, minimum width=1cm, inner sep=0] (nsource) at (4.0,-0.25) {\scriptsize n\,\tiny $+$};
+    \draw[fill=yellow!60] (5.5,0) rectangle (6.5,-0.5); % NMOS drain
+    \node[draw, rectangle, fill=yellow!60, minimum height=0.5cm, minimum width=1cm, inner sep=0] (ndrain) at (6.0,-0.25) {\scriptsize n\,\tiny $+$};
+
+    % Gate oxide and Gate for PMOS and NMOS
+    \node[draw, rectangle, fill=gray!40, minimum height=0.1cm, minimum width=1.6cm, inner sep=0] (pgray) at (-5.0,0.05) {};
+    \node[draw, rectangle, fill=gray!40, minimum height=0.1cm, minimum width=1.6cm, inner sep=0] (ngray) at (5.0,0.05) {};
+    \node[draw, rectangle, fill=blue!30, minimum height=0.4cm, minimum width=1.4cm, inner sep=0] (pgate) at (-5.0,0.3) {};
+    \node[draw, rectangle, fill=blue!30, minimum height=0.4cm, minimum width=1.4cm, inner sep=0] (ngate) at (5.0,0.3) {};
+
+    % Taps and Substrate Contacts
+    \node[draw, rectangle, fill=yellow!60, minimum height=0.5cm, minimum width=1cm, inner sep=0] (ntap) at (-2,-0.25) {\scriptsize n\tiny $+$\,\scriptsize tap};
+    \node[draw, rectangle, fill=red!60, minimum height=0.5cm, minimum width=1cm, inner sep=0] (ptap) at (2,-0.25) {\scriptsize p\tiny $+$\,\scriptsize tap};
+
+
+    \draw (ngate.north) --++ (0,0.5) node[draw, circle, minimum size=0.13cm, inner sep=0, fill=white](ngatecirc){} ++ (0,0.1) node[anchor=south]{\scriptsize G};
+    \draw (nsource.north) --++ (0,1) node[draw, circle, minimum size=0.13cm, inner sep=0, fill=white](nsourcecirc){} ++ (0,0.1) node[anchor=south]{\scriptsize S};
+    \draw (ndrain.north) --++ (0,1) node[draw, circle, minimum size=0.13cm, inner sep=0, fill=white](ndraincirc){} ++ (0,0.1) node[anchor=south]{\scriptsize D};
+    \draw (ntap.north) --++ (0,1) node[draw, circle, minimum size=0.13cm, inner sep=0, fill=white](ntapcirc){} ++ (0,0.05) node[anchor=south]{\scriptsize B ($V_\text{DD}$)};
+
+    \draw (pgate.north) --++ (0,0.5) node[draw, circle, minimum size=0.13cm, inner sep=0, fill=white](pgatecirc){} ++ (0,0.1) node[anchor=south]{\scriptsize G};
+    \draw (psource.north) --++ (0,1) node[draw, circle, minimum size=0.13cm, inner sep=0, fill=white](psourcecirc){} ++ (0,0.1) node[anchor=south]{\scriptsize S};
+    \draw (pdrain.north) --++ (0,1) node[draw, circle, minimum size=0.13cm, inner sep=0, fill=white](pdraincirc){} ++ (0,0.1) node[anchor=south]{\scriptsize D};
+    \draw (ptap.north) --++ (0,1) node[draw, circle, minimum size=0.13cm, inner sep=0, fill=white](ptapcirc){} ++ (0,0.05) node[anchor=south]{\scriptsize B ($V_\text{SS}$)};
+
+    \draw[decoration={brace},decorate] (-7,1.7) -- node[above=1pt] {\scriptsize PMOS} (-1,1.7);
+    \draw[decoration={brace},decorate] (1,1.7) -- node[above=1pt] {\scriptsize NMOS} (7,1.7);
+    % Labels
+    \draw (nwell.south west) ++ (0.08,0.08) node[anchor=south west] {\scriptsize N-Well};
+    \draw (psub.south) ++ (0.1,0.1) node[anchor=south] {\scriptsize P-Substrate};
+
+    \draw (psub.south) node[ground] (gnd) {};
+
+    \end{tikzpicture}
+    \vspace{-0.1cm}
+    \caption{Попречни пресјек типичног CMOS инвертора.}
+    \label{fig:dnw:typical}
+\end{figure}
