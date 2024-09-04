@@ -18,7 +18,7 @@
 		\draw [->, \CtrlPreprocColor] (GREYCNT) -- (CONVSYNC);
 		\draw [dashed, \CtrlPreprocColor, fill=\CtrlPreprocColor, fill opacity=0.1, text opacity=1] (1.5,3.5) rectangle (7.5,6.5) node[midway, above=0.85]{УПРАВЉАЧКА ПРЕДОБРАДА};
 		% Splitter/demultiplexer
-		\node (DEMUX) at (8.5,5) [draw, \CtrlColor, trapezium, trapezium stretches=true, minimum width=7cm, minimum height=1cm, rotate=90]{РАЗДЈЕЛНИК \engl{SPLITTER}};
+		\node (DEMUX) at (8.5,5) [draw, \CtrlColor, trapezium, trapezium stretches=true, minimum width=7cm, minimum height=1cm, rotate=90]{ДЕМУЛТИПЛЕКСЕР};
 		\draw [-,  \CtrlPreprocColor] (CONVSYNC) -- (7.5,5);
 		\draw [->, \CtrlColor]           (7.5,5) -- (DEMUX);
 		% Bang-bang FLL control branch
@@ -54,7 +54,7 @@
 		\draw (25,5) -- (25,0);
 		\draw (25,0) --  (0,0);
 		
-        \draw (-1,-1) rectangle (26,10) node[midway, above=2.95]{\textbf{ПРЕДЛОЖЕНА ДИГИТАЛНА ФРЕКВЕНЦИЈСКИ ЗАТВОРЕНА ПЕТЉА}};	
+        \draw (-1,-1) rectangle (26,10) node[midway, above=2.95]{\textbf{ДИГИТАЛНА ФРЕКВЕНЦИЈСКИ ЗАТВОРЕНА ПЕТЉА}};	
         \draw [thick, ->] (-2.5,9) -- (-1,9) node[midway, above=0.1] {\textbf{RSTN}};
         \draw [thick, ->] (-2.5,8) -- (-1,8) node[midway, above=0.1] {\textbf{FREF}};        	
         \draw [thick, ->] (-2.5,7) -- (-1,7) node[midway, above=0.1] {\textbf{FMUL}};

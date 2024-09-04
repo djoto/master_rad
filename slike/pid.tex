@@ -1,6 +1,6 @@
 \begin{figure}[!ht]
     \centering
-    \vspace{0.5cm}
+    %\vspace{0.5cm}
     \begin{tikzpicture}[auto, thick, node distance=2cm, >=triangle 45]
     % Nodes
     \node [draw, circle, fill=yellow!20] (sum1) {$\sum$};
@@ -10,8 +10,8 @@
     \node [draw, rectangle, minimum width=3.5cm, minimum height=1.2cm, fill=green!20, above of=I, node distance=2cm] (P) {\textbf{P}\ \ \ \ \ \ \ \ \ \ \ $K_\text{p} e(t)$};
     \node [draw, rectangle, minimum width=3.5cm, minimum height=1.2cm, fill=orange!20, below of=I, node distance=2cm] (D) {\textbf{D}\ \ \ \ \ \ \ \ \ $K_\text{d} \dfrac{de(t)}{dt}$};
     \node [draw, circle, fill=yellow!20, right of=I, node distance=3cm] (sum2) {$\sum$};
-    \node [draw, rectangle, right of=sum2, node distance=2cm] (plant) {Обрада};
-    \node [right of=plant, node distance=1.2cm] (output) {};
+    % \node [draw, rectangle, right of=sum2, node distance=2cm] (plant) {Обрада};
+    \node [right of=sum2, node distance=1.5cm] (output) {};
     \node [right of=output, node distance=1.2cm] (yout) {$y(t)$};
 
     % Arrows
@@ -23,10 +23,10 @@
     \draw[->] (I) -- node [pos=0.8] {$+$} (sum2);
     \draw[->] (e.center) |- (D);
     \draw[->] (D) -| node [pos=0.9] {$+$} (sum2);
-    \draw[->] (sum2) -- (plant);
-    \draw[-] (plant) -- (output.center);
+    \draw[-] (sum2) -- (output.center);
+    % \draw[-] (plant) -- (output.center);
     \draw[->] (output.center) -- (yout);
-    \draw[->] (output.center) |- ++(0,-3.5) -| node[pos=0.05] {} node[pos=0.95] {$-$} (sum1);
+    \draw[->] (output.center) |- ++(0,-3.2) -| node[pos=0.05] {} node[pos=0.95] {$-$} (sum1);
 
     \end{tikzpicture}   
     %\vspace{0.5cm}
