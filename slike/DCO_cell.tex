@@ -8,24 +8,36 @@
         \ctikzset{logic ports=ieee}
         \draw (0,0)
         node[ieeestd not port, anchor=out, scale=1](tsinv){}
-        (tsinv.in) --++ (-0.3,0) node[signal, anchor=east, scale=1, draw](pinphi){} 
+        (tsinv.in) --++ (-0.5,0) node[signal, anchor=east, scale=1, draw](pinphi){} 
         (pinphi.west) node[anchor=east, scale=1]{In}
-        (tsinv.out) --++ (0.4,0) node[signal, anchor=west, scale=0.8, draw](pinpho){} 
+        %(tsinv.in) --++ (0,-1.3) --++ (-8.5,0) node[anchor=east, scale=1](inlong){In}
+        %(inlong) --++ (-0.5,0) node[signal, anchor=east, scale=1, draw](pinphi){} 
+        (tsinv.out) --++ (0.4,0) node[signal, anchor=west, scale=1, draw](pinpho){} 
         (pinpho.east) node[anchor=west, scale=1]{Out}
-        (tsinv.up) --++ (0,0.5) node[anchor=west, scale=1]{ctrl} |-++ (-1.5,0.3) node[ieeestd nor port, anchor=out, scale=1](nor){}
+	(tsinv.up) --++ (0,0.4) node[anchor=west, scale=1]{ctrl} |-++ (-3.5,0.2) node[ieeestd not port, anchor=out, scale=1](not) {} 
+	(tsinv.down) --++ (0,-0.4) node[anchor=west, scale=1]{$\overline{\mbox{ctrl}}$}
+	(not.in) --++ (-1,0) node[ieeestd nor port, anchor=out, scale=1](nor){}
         (nor.in 2) -|++ (0, -0.6) node[ieeestd and port, anchor=out, scale=1](and){}
         (nor.in 1) -- (and.in 1|-nor.in 1) node[signal, anchor=east, scale=1, draw](pinro){} 
         (pinro.west) node[anchor=east, scale=1]{Row On}       
         (and.in 1) node[signal, anchor=east, scale=1, draw](pinrs){} 
         (pinrs.west) node[anchor=east, scale=1]{Row Sel.}
         (and.in 2) node[signal, anchor=east, scale=1, draw](pincs){} 
-        (pincs.west) node[anchor=east, scale=1]{Col. Sel.}
-        ;
+        (pincs.west) node[anchor=east, scale=1]{Col. Sel.};
+	\draw[-] (not.in) node[circ]{} --++ (0,-1.8) -| (tsinv.down);
+	\draw[dashed] (and.in 2) ++ (0.2,0) node[](csin){} --++ (0,2.5) -| (not.out) --++ (0,-2.9) -| (csin);
+	\draw[dashed] (not.in) ++ (-0.3,0) node[](notin){} --++ (0,1) -| (tsinv.out) --++ (0,-1.7) -| (notin);
+	\draw (csin) ++ (2.5,2.5) node[anchor=south west](andorlabel){\small И-ИЛИ}; 
+	\draw (csin) ++ (7,2.1) node[anchor=south west](tsinvlabel){\small Тростатички инвертор}; 
+	%\draw[dashed] (not.out) --++ (0,0.9);
+	\draw[thick] (tsinv.down) node[draw, circle, anchor=north, fill=white, minimum size=0.17cm, inner sep=0] (invup) {};
+        %\draw[decoration={brace, mirror},decorate] (not.out) ++ (0,0.9) --++ (-3.25,0) node[above=2pt] {\small И-ИЛИ} --++ (-3.23,0);
     \end{tikzpicture}
-    \vspace{0.2cm}
+    %\vspace{0.2cm}
     \label{DCO_cell_logic_gate_level}
     }
-    \hfil
+    \vfil
+    %\hfil
     \vspace{0.5cm}
     \subfloat[]{
     \begin{tikzpicture}[scale=1]
@@ -41,10 +53,10 @@
         ($(pmos1.D)!0.5!(nmos1.D)$) node[circ, scale=1]{} --++ (0.6,0) node[signal, anchor=west, scale=1, draw](pinpho){} 
         (pinpho.east) node[anchor=west, scale=1]{Out}
         (pmos1.S) node[pmos, scale=1, anchor=D](pmos2){}
-        (pmos2.G) ++(-0.3,0) node[anchor=south, scale=1]{ctrl}
+        (pmos2.G) ++(-0.3,0) node[anchor=south, scale=1]{$\overline{\mbox{ctrl}}$}
         (nmos1.S) node[nmos, scale=1, anchor=D](nmos2){}
         (nmos2.G) --++ (-1,0) |-++ (-1,0) node[circ, scale=1](nctrl){}
-        (nmos2.G) ++ (-0.3,0) node[anchor=south, scale=1]{$\overline{\mbox{ctrl}}$}
+        (nmos2.G) ++ (-0.3,0) node[anchor=south, scale=1]{ctrl}
         (nctrl) node[pmos, scale=1, anchor=D](pinv){}
         (nctrl) node[nmos, scale=1, anchor=D](ninv){}
         (pinv.G) to (ninv.G)
