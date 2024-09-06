@@ -1284,10 +1284,7 @@ class fll:
                  k_dco,            # DCO frequency resolution
                  clk_dco_init):    # DCO initial frequency (dco_ctrl=0) 
         """
-        Frequency-locked loop (FLL) is a negative feedback control system that locks the output
-        frequency signal to the target frequency. Principally, it continuously controls the
-        oscillator frequency in an automated way until its output frequency matches the target
-        value, after which that value is maintained at the output.
+        Frequency-locked loop (FLL) is a negative feedback control system that locks the output frequency signal to the target frequency. Principally, it continuously controls the oscillator frequency in an automated way until its output frequency matches the target value, after which that value is maintained at the output.
         """
         # Inputs from design
         self.CW = CW
@@ -1324,7 +1321,7 @@ class fll:
             rst_ni):
         self.rst_ni = rst_ni
 
-        # Convert control mode integer to binary array (1/0 integers) 
+        # Convert control mode integer value to the corresponding binary array (1/0 integers) 
         dco_ctrl_mode_bin_arr = list(map(int, list(bin(self.dco_ctrl_mode_i)[2:][::-1])))
 
         # PID logic
@@ -1356,9 +1353,9 @@ class fll:
 \begin{lstlisting}[language=Python, caption={Имплементација класе \PID\ контролера.}, label={lst:py:pid}]
 import copy
 
-INT_WIDTH = 8                             # width of output control signal
-FX_INT_WIDTH = 12                         # integer part width of PID sum (Q12.6)
-FX_DEC_WIDTH = 6                          # decimal part width of PID sum (Q12.6)
+INT_WIDTH = 8                   # width of output control signal
+FX_INT_WIDTH = 12               # integer part width of PID sum (Q12.6)
+FX_DEC_WIDTH = 6                # decimal part width of PID sum (Q12.6)
 CTRL_WIDTH = FX_INT_WIDTH + FX_DEC_WIDTH  # total width of PID sum
 
 class pid:
@@ -1396,7 +1393,6 @@ class pid:
                 self.err_eq0_cnt += 1
 
         prop = 0
-        # integ = 0
         deriv = 0
         self.err = self.setpoint_i - self.feedback_i
         err_diff = self.err - self.err_prev
