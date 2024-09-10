@@ -1235,9 +1235,17 @@ endmodule
 
 \subsection{Спектар снаге фреквенцијски затворене петље}
 Нормализовани спектар снаге предложеног \FLL-а у \PID\ режиму, током процеса одржавања вриједности фреквенције од 640\,MHz на излазу, приказан је на Слици~\ref{FLL_spectrum}. \par
+%\input{slike/fll_spectrum_20240517_19h20.tex}
 \begin{figure}[!ht]
     \centering
-    \includegraphics[scale=1, width=12.8cm, height=10.5cm]{slike/fll_spectrum_ppt.pdf}
+    \begin{tikzpicture}
+    	\node[inner sep=0] (fll_spectrum) { \includegraphics[scale=1, width=12.8cm, height=10.5cm]{slike/fll_spectrum_ppt.pdf} };
+    % \includegraphics[scale=1, width=12.8cm, height=10.5cm]{slike/fll_spectrum_ppt.pdf}
+    	%\draw[<->] (-7.25,-7.3) -- (-7.25,6.8) node[midway, left=0.2, above=0.05, rotate=90] {\footnotesize 70,11\,\textmu m};
+    	%\draw[<->] (-6.73,-7.9) -- (7,-7.9) node[midway, right=0.1, below=0.02] {\footnotesize 67,825\,\textmu m};
+	\draw (0.6,-4.85) node[rectangle, fill=white]{\footnotesize Фреквенција [MHz]};
+	\draw (-6.1,0.5) node[rectangle, fill=white, rotate=90]{\footnotesize Нормализовани спектар снаге [dBm]};
+    \end{tikzpicture}
     \caption{Спектар снаге \FLL-a, са фреквенцијом носиоца 640\,MHz, најјачим нивоом непожељног сигнала (у средини лијево) на -23,6\,dBc, и највећим непожељним сигналом референтне фреквенције унутар 640 $\pm$ 16\,MHz (горе десно, зумирано) на нивоу -43,8\,dBc.}
     \label{FLL_spectrum}
 \end{figure}
