@@ -1,6 +1,5 @@
 \begin{figure}[!ht]
     \centering
-    %\vspace{0.5cm}
     \begin{tikzpicture}[auto, thick, node distance=2cm, >=triangle 45]
     % Nodes
     \node [draw, circle, fill=yellow!20] (sum1) {$\sum$};
@@ -29,7 +28,6 @@
     \draw[->] (output.center) |- ++(0,-3.2) -| node[pos=0.05] {} node[pos=0.95] {$-$} (sum1);
 
     \end{tikzpicture}   
-    %\vspace{0.5cm}
     \caption{Блок дијаграм \PID\ регулатора у повратној спрези.}
     \label{pid_img}
 \end{figure}

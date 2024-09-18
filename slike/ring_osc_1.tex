@@ -13,7 +13,6 @@
     (0,0) --++ (0,-0.5) node[nmos, anchor=D] (M1) {$\text{M}_1$} % NMOS transistor
     (M1.S) node[ground] {} % Ground connection
     (M1.D) --++ (0,0.5) to[R, l=$R_D$] (0,2) node[rground, rotate=180] {} ++ (0,0.7) node (anchor=south)(Vdd) {$V_\text{DD}$} % Resistor connected to Vdd
-    %(M1.G) -- (-2,0) coordinate (V3) % Feedback loop connection
     (M1.G) --++ (-0.5,0) node[anchor=south west] (X) {$X$}
     (M1.G) --++ (-1,0) node[circle, anchor=center] (G1) {}
     (M1.D) to [short, *-] (1.5, -0.5) node[circ] (V1) {} % Output node
@@ -23,31 +22,21 @@
     % Stage 2
     \begin{scope}[shift={(5,0)}, name=stage2]
     \draw 
-    % Stage 1
     (0,0) --++ (0,-0.5) node[nmos, anchor=D] (M2) {$\text{M}_2$} % NMOS transistor
     (M2.S) node[ground] {} % Ground connection
     (M2.D) --++ (0,0.5) to[R, l=$R_D$] (0,2) node[rground, rotate=180] {} ++ (0,0.7) node (anchor=south)(Vdd) {$V_\text{DD}$} % Resistor connected to Vdd
-    %(M1.G) -- (-2,0) coordinate (V3) % Feedback loop connection
     (M2.G) --++ (-0.5,0) node[anchor=south west] (Y) {$Y$}
     (M2.G) --++ (-0.7,0) node[circle, anchor=center] (G2) {}
     (M2.D) to [short, *-] (1.5, -0.5) node[circ] (V2) {} % Output node
     to[C, l=$C_L$] (V2 |- M2.S) node[ground] {}; % Capacitor connected to ground
     \end{scope}
-    %\draw (2,0) node[nmos, anchor=D] (M2) {} % NMOS transistor
-    %(M2.S) -- (2,-2) node[ground] {} % Ground connection
-    %(M2.D) to[R, l=$R_2$] (2,2) to[Vdd] {} % Resistor connected to Vdd
-    %(M2.G) -- (V1) % Gate connected to output of Stage 1
-    %(2,0) -- (4,0) node[circ] (V2) {} % Output node
-    %to[C, l=$C_2$] (V2 |- M2.S) node[ground] {}; % Capacitor connected to ground
 
     % Stage 3
     \begin{scope}[shift={(10,0)}, name=stage3]
     \draw 
-    % Stage 1
     (0,0) --++ (0,-0.5) node[nmos, anchor=D] (M3) {$\text{M}_3$} % NMOS transistor
     (M3.S) node[ground] {} % Ground connection
     (M3.D) --++ (0,0.5) to[R, l=$R_D$] (0,2) node[rground, rotate=180] {} ++ (0,0.7) node (anchor=south)(Vdd) {$V_\text{DD}$} % Resistor connected to Vdd
-    %(M1.G) -- (-2,0) coordinate (V3) % Feedback loop connection
     (M3.G) --++ (-0.5,0) node[anchor=south west] (Z) {$Z$}
     (M3.G) --++ (-0.7,0) node[circle, anchor=center] (G3) {}
     (M3.D) to [short, *-] (1.5, -0.5) node[circ] (V3) {} % Output node
@@ -59,21 +48,7 @@
     \draw (V3) --++ (1.8,0) --++ (0,-3.5) -| (G1.center);
 
     \draw[dashed] (-1.6,0) --++ (0,3.3) node[anchor=south west] (H) {$-H(s)$} --++ (14.5,0) --++ (0,-6.5) --++ (-14.5,0) --++ (0,3.2);
-    %\draw[-] (scope2.V1) -| (scope3.Z);
-    %\draw (4,0) node[nmos, anchor=D] (M3) {} % NMOS transistor
-    %(M3.S) -- (4,-2) node[ground] {} % Ground connection
-    %(M3.D) to[R, l=$R_3$] (4,2) to[Vdd] {} % Resistor connected to Vdd
-    %(M3.G) -- (V2) % Gate connected to output of Stage 2
-    %(4,0) -- (6,0) node[circ] (V3) {} % Output node
-    %to[C, l=$C_3$] (V3 |- M3.S) node[ground] {}; % Capacitor connected to ground
 
-    % Feedback loop from Stage 3 to Stage 1
-    %\draw (V3) |- (-2,0) -- (M1.G);
-    %(0,0)
-    %node[nmos, scale=1](nmos1){}
-    %(nmos1.D) to [short] ++(0,-0.5) node[R, scale=1](r1){}
-    %(nmos1.S) to [short] node[ground](gnd1){}
-    %;
     \end{tikzpicture}
     \vspace{0.2cm}
     \caption{Три степена са заједничким извором у повратној спрези.}

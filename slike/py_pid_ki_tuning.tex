@@ -1,12 +1,10 @@
-\begin{figure*}[!ht]%[!b]
+\begin{figure*}[!ht]
     \centering
 
     \begin{tikzpicture}[scale=1]
-    \pgfplotsset{%
+    \pgfplotsset{
         width=15.5cm,
 	height=7.185cm
-	%height=7.728cm
-        %height=10cm
     }
     
     \definecolor{darkgray176}{RGB}{176,176,176}
@@ -35,14 +33,10 @@
     y axis line style = {line width=0.2pt},
     x grid style = {line width=0.2pt},
     y grid style = {line width=0.2pt},
-    %legend pos=north west,
-    %legend style={legend image post style={mark options={scale=0.7}}, cells={anchor=west}, at={(0.69,1)}, font=\tiny, line width=0.5pt, legend reversed=true},
     legend style={legend image post style={scale=0.82}, cells={anchor=west}, at={(1.0,0.239)}, font=\scriptsize, line width=0.5pt, legend reversed=true},
     tick label style={font=\footnotesize},
     label style={font=\footnotesize}
     ]
-    %\addplot [steelblue31119180, mark=*, mark options={scale=0.5, mark repeat=15}]
-    %\addplot [steelblue31119180, solid]
     \addplot [semithick, steelblue31119180, const plot mark right]
     table {%
     0 168
@@ -178,8 +172,6 @@
     130 641.2
     };
     \addlegendentry{\P=15, \I=4, \D=0}
-    %\addlegendentry{$K_\text{p}\text{=}64, K_\text{i}\text{=}64, K_\text{d}\text{=}64$}
-    %\addplot [darkorange25512714, mark=square*, mark options={scale=0.5, mark repeat=15}]
     \addplot [semithick, darkorange25512714, const plot mark right]
     table {%
     0 240.8
@@ -315,8 +307,6 @@
     130 641.2
     };
     \addlegendentry{\P=15, \I=15, \D=0}
-    %\addlegendentry{$K_\text{p}\text{=}64, K_\text{i}\text{=}64, K_\text{d}\text{=}64$}
-    %\addplot [forestgreen4416044, mark=triangle*, mark options={scale=0.5, mark repeat=15}]
     \addplot [semithick, forestgreen4416044, const plot mark right]
     table {%
     0 319.2

@@ -47,13 +47,7 @@
 	\draw (out1) -- (in2.center);
 	\draw (out2) -- (in3.center);
 	\draw (out3) --++ (1.2,0) --++ (0,-3) -| (in1.center);
-	%($(pinv.G)!0.5!(ninv.G)$) node[circ, scale=1]{} --++ (-1,0) --++ (0,2.5) node[circ, scale=1](pctrl){}
-        %
-        %(ninv.S) ++ (-0.3,0) --++ (0.6,0)
-	%(ninv.S) node[anchor=north, scale=1]{$\text{V}_\text{SS}$}
 
-        %(pinv.S) ++ (-0.3,0) --++ (0.6,0)
-	%(pinv.S) node[anchor=south, scale=1]{$\text{V}_\text{DDL}$}
     \end{tikzpicture}
     \vspace{0.2cm}
     \caption{Тростепени прстенасти осцилатор састављен од CMOS инвертора.}
