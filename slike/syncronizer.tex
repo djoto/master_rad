@@ -1,0 +1,29 @@
+\begin{figure}[!ht]
+    \centering
+    \tikzset{flipflop DQ/.style={flipflop,
+             flipflop def={t1=D, t6=Q, c3=1, font=\normalsize}
+    }}
+    \begin{tikzpicture}
+
+    \draw
+    (-4,0) node[draw, rectangle, dashed, text width=2.5cm, align=center](gray){Грејев\\бројач\\у подручју\\такта \DCO-a}
+
+    % First flip-flop
+    (gray.east) --++ (1.5,0) node[flipflop DQ, anchor=pin 1] (ff1) {}
+    
+    % Second flip-flop
+    (ff1.pin 6) --++ (1.5,0) node[flipflop DQ, anchor=pin 1] (ff2) {}
+    
+    (ff2.pin 6) --++ (1.5,0) node[draw, rectangle, dashed, text width=2.5cm, align=center, anchor=west](bin){Бинарни претварач у подручју референтног такта}
+
+    (-2.5,-3) node(ref){} --++ (1.2,0) node[](circ1){} -| (ff1.pin 3)
+    (circ1) -| (ff2.pin 3)
+
+    (ref.center) node[draw, rectangle, dashed, text width=2.5cm, align=center, anchor=east]{Референтни такт}
+    ;
+    \draw[dashed] (gray.north east) ++ (1,0) node[](start){} --++ (7,0) --++ (0,-4.5) -| (start.center);
+    \draw (start.north east) ++ (1.8,0.2) node[anchor=west]{Синхронизатор};
+    \end{tikzpicture}
+    \caption{Синхронизатор са два флип-флопа.}
+    \label{fig:control_preprocessing:sync}
+\end{figure}

@@ -3,14 +3,14 @@
     \begin{tikzpicture}[auto, thick, node distance=2cm, >=triangle 45]
     % Nodes
     \node [draw, circle, fill=yellow!20] (sum1) {$\sum$};
-    \node [left of=sum1, node distance=2cm] (input) {$u(t)$};
-    \node [right of=sum1] (e) {};
-    \node [draw, rectangle, minimum width=3.5cm, minimum height=1.2cm, fill=cyan!20, right of=e, node distance=3cm] (I) {\textbf{I}\ \ \ \ \ $K_\text{i} \int_0^t e(\tau) d\tau$};
-    \node [draw, rectangle, minimum width=3.5cm, minimum height=1.2cm, fill=green!20, above of=I, node distance=2cm] (P) {\textbf{P}\ \ \ \ \ \ \ \ \ \ \ $K_\text{p} e(t)$};
-    \node [draw, rectangle, minimum width=3.5cm, minimum height=1.2cm, fill=orange!20, below of=I, node distance=2cm] (D) {\textbf{D}\ \ \ \ \ \ \ \ \ $K_\text{d} \dfrac{de(t)}{dt}$};
+    \node [left of=sum1, node distance=2cm] (input) {$r(t)$};
+    \node [circ, right of=sum1] (e) {};
+    \node [draw, rectangle, minimum width=3.5cm, minimum height=1.2cm, fill=cyan!20, right of=e, node distance=3cm] (I) {\textbf{\I}\ \ \ \ $K_\text{i} \int_0^t e(\tau) d\tau$};
+    \node [draw, rectangle, minimum width=3.5cm, minimum height=1.2cm, fill=green!20, above of=I, node distance=2cm] (P) {\textbf{\P}\ \ \ \ \ \ \ \ \ \ \ $K_\text{p} e(t)$};
+    \node [draw, rectangle, minimum width=3.5cm, minimum height=1.2cm, fill=orange!20, below of=I, node distance=2cm] (D) {\textbf{\D}\ \ \ \ \ \ \ \ \ $K_\text{d} \dfrac{de(t)}{dt}$};
     \node [draw, circle, fill=yellow!20, right of=I, node distance=3cm] (sum2) {$\sum$};
     % \node [draw, rectangle, right of=sum2, node distance=2cm] (plant) {Обрада};
-    \node [right of=sum2, node distance=1.5cm] (output) {};
+    \node [circ, right of=sum2, node distance=1.5cm] (output) {};
     \node [right of=output, node distance=1.2cm] (yout) {$y(t)$};
 
     % Arrows

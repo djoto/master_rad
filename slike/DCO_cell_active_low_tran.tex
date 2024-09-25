@@ -1,0 +1,76 @@
+\begin{figure}[!ht]
+    \centering
+    %\vspace{0.7cm}
+    \begin{tikzpicture}[scale=1]
+        \ctikzset{tripoles/mos style/arrows}
+        \ctikzset{tripoles/pmos style/emptycircle}
+        \ctikzset{logic ports=ieee}
+        \draw (0,0)
+        node[pmos, scale=1](pmos1){}
+        (pmos1.D) to [short] ++(0,-0.5) node[nmos, scale=1, anchor=D](nmos1){}
+        (pmos1.S) node[pmos, scale=1, anchor=D](pmos2){}
+        (nmos1.S) node[nmos, scale=1, anchor=D](nmos2){}
+        (pmos1.G) to (nmos1.G)
+        ($(pmos1.G)!0.5!(nmos1.G)$) node[circ, scale=1]{} --++ (-1,0) node[signal, anchor=east, scale=1, draw](pinphi){} 
+        (pinphi.west) node[anchor=east, scale=1]{In}
+        ($(pmos1.D)!0.5!(nmos1.D)$) node[circ, scale=1]{} --++ (0.6,0) node[signal, anchor=west, scale=1, draw](pinpho){} 
+        (pinpho.east) node[anchor=west, scale=1]{Out}
+        (pmos2.G) ++(-0.3,0) node[anchor=south, scale=1]{ctrl}
+        (pmos2.G) --++ (-1,0) |-++ (-1,0) node[circ, scale=1](nctrl){}
+        (nmos2.G) ++ (-0.3,0) node[anchor=south, scale=1]{$\overline{\mbox{ctrl}}$}
+        (nctrl) node[pmos, scale=1, anchor=D](pinv){}
+        (nctrl) node[nmos, scale=1, anchor=D](ninv){}
+        (pinv.G) to (ninv.G)
+        ($(pinv.G)!0.5!(ninv.G)$) node[circ, scale=1]{} --++ (-1,0) --++ (0,-2.4) node[circ, scale=1](pctrl){} |- (nmos2.G)
+        (pctrl) --++ (-3,0) node[circ, scale=1](ctrl){}
+        (ctrl) --++ (0,0.4) node[circ, scale=1](pside){}
+        (ctrl) --++ (0,-0.4) node[circ, scale=1](nside){}
+        (pside) ++ (-2,0) node[pmos, scale=1, anchor=D](prs){}
+        (pside) ++ (2,0.8) node[pmos, scale=1, anchor=D](pro){}
+        (prs.G) node[signal, anchor=east, scale=1, draw](pinrs){} 
+        (pinrs.west) node[anchor=east, scale=1]{Row Sel.}
+        (pro.G) node[signal, anchor=east, scale=1, draw](pinro){} 
+        (pinro.west) node[anchor=east, scale=1]{Row On}
+        (prs.D) -| (pro.D)
+        %(prs.S) to (pro.S)
+        (prs.S) node[pmos, scale=1, anchor=D](pcs){}
+        (pcs.G) node[signal, anchor=east, scale=1, draw](pincs){} 
+        (pincs.west) node[anchor=east, scale=1]{Col. Sel.}
+        (pcs.S) -| (pro.S)
+        %
+        (nside) ++ (-2,0) node[nmos, scale=1, anchor=D](nrs){}
+        (nside) ++ (2,0) node[nmos, scale=1, anchor=D](ncs){}
+        (ncs.G) node[signal, anchor=east, scale=1, draw](pinncs){} 
+        (pinncs.west) node[anchor=east, scale=1]{Col. Sel.}
+        (nrs.G) node[signal, anchor=east, scale=1, draw](pinnrs){} 
+        (pinnrs.west) node[anchor=east, scale=1]{Row Sel.}
+        (ncs.D) to (nside)
+        (ncs.S) ++(-2,0) node[nmos, scale=1, anchor=D](nro){}
+        (nro.G) node[signal, anchor=east, scale=1, draw](pinnro){} 
+        (pinnro.west) node[anchor=east, scale=1]{Row On}
+
+
+	(pcs.S) ++ (2,0) node[circ, scale=1](vdd){} -| (pro.S)
+        %
+        (vdd) --++ (0, 0.5) node[](vdd1){} ++ (-0.3,0) --++ (0.6,0) 
+	(vdd1) node[anchor=south, scale=1]{$\text{V}_\text{DDL}$}
+        (nro.S) node[scale=1](vss){} -| (nro.S)
+        %
+        (vss) node[](vss1){} ++ (-0.3,0) --++ (0.6,0) 
+	(vss1) node[anchor=north, scale=1]{$\text{V}_\text{SS}$}
+        (ninv.S) ++ (-0.3,0) --++ (0.6,0)
+	(ninv.S) node[anchor=north, scale=1]{$\text{V}_\text{SS}$}
+        (nmos2.S) ++ (-0.3,0) --++ (0.6,0)
+	(nmos2.S) node[anchor=north, scale=1]{$\text{V}_\text{SS}$}
+        (pmos2.S) ++ (-0.3,0) --++ (0.6,0)
+	(pmos2.S) node[anchor=south, scale=1]{$\text{V}_\text{DDL}$}
+        (pinv.S) ++ (-0.3,0) --++ (0.6,0)
+	(pinv.S) node[anchor=south, scale=1]{$\text{V}_\text{DDL}$}
+	(nrs.S) to (ncs.S)
+	(nrs.D) to (ncs.D)
+	(nrs.S) ++ (2,0) node[circ]{}
+        ;
+    \end{tikzpicture}
+    \caption{Ћелија \DCO-а на нивоу CMOS транзистора са другачијим распоредом контролног и улазног сигнала тростатичког инвертора.}
+    \label{DCO_cell_active_low_tran}
+\end{figure}

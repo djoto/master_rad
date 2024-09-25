@@ -1,0 +1,83 @@
+\begin{figure}[!ht]
+    \centering
+    \begin{tikzpicture}[>=triangle 45]
+
+    % Параметри
+    \def\rows{17}
+    \def\cols{15}
+    \def\size{0.2} % Величина кружића
+    \def\spacing{0.6} % Мањи размаци између кружића
+    \def\arrowspacing{0.4} % Размак између стрелица и бројева
+    \def\leftcolumngap{2.5} % Већи размак између двије колоне стрелица
+
+    % Петља за генерисање кружића
+    \foreach \r in {1,...,\rows} {
+        \foreach \c in {1,...,\cols} {
+            % Испуњеност бојом (прве три врсте су црне, четврта има само 5 црних кружића)
+            \ifnum \r=4
+                \ifnum \c<6
+                    \fill (\c * \spacing, -\r * \spacing) circle (\size);
+                \else
+                    \draw (\c * \spacing, -\r * \spacing) circle (\size);
+                \fi
+            \else
+                \ifnum \r<4
+                    \fill (\c * \spacing, -\r * \spacing) circle (\size);
+                \else
+                    \draw (\c * \spacing, -\r * \spacing) circle (\size);
+                \fi
+            \fi
+        }
+    }
+
+    % Стрелице изнад прве врсте и бројеви
+    \foreach \c in {1,...,\cols} {
+        \draw[->, fill=black] (\c * \spacing, \arrowspacing) -- (\c * \spacing, -0.1);
+%        \node at (\c * \spacing, \arrowspacing + 0.25) {0};
+        \ifnum \c<6
+            \node at (\c * \spacing, \arrowspacing + 0.25) {1};
+%            \fill (\c * \spacing, -\r * \spacing) circle (\size);
+        \else
+            \node at (\c * \spacing, \arrowspacing + 0.25) {0};
+%            \draw (\c * \spacing, -\r * \spacing) circle (\size);
+        \fi
+    }
+    \node at (8 * \spacing, \arrowspacing + 0.8) {\textit{Column Select}};
+
+    % Прва колона стрелица и бројеви лијево од прве колоне
+    \foreach \r in {1,...,\rows} {
+        \draw[->, fill=black] (-0.5, -\r * \spacing) -- (0, -\r * \spacing);
+        \ifnum \r=4
+            \node at (-0.7, -\r * \spacing) {1};
+        \else
+            \node at (-0.7, -\r * \spacing) {0};
+        \fi
+    }
+    \node at (-1.2, -9 * \spacing) [rotate=90] {\textit{Row Select}};
+
+    % Друга колона стрелица и бројеви лијево од прве колоне, са већим размаком
+    %\foreach \r in {1,...,\rows} {
+    %    \draw[->, fill=black] (-\leftcolumngap, -\r * \spacing) -- (-2, -\r * \spacing);
+    %    \ifnum \r<4
+    %        \node at (-\leftcolumngap - 0.2, -\r * \spacing) {1};
+    %    \else
+    %        \node at (-\leftcolumngap - 0.2, -\r * \spacing) {0};
+    %    \fi
+    %}
+    %\node at (-3.2, -9 * \spacing) [rotate=90] {\textit{Row On}};
+
+    % Колона стрелица и бројеви десно од задње колоне
+    \foreach \r in {1,...,\rows} {
+        \draw[->, fill=black] (10.1, -\r * \spacing) -- (9.6, -\r * \spacing);
+        \ifnum \r<4
+            \node at (10.3, -\r * \spacing) {1};
+        \else
+            \node at (10.3, -\r * \spacing) {0};
+        \fi
+    }
+    \node at (10.7, -9 * \spacing) [rotate=90] {\textit{Row On}};
+
+    \end{tikzpicture}
+    \caption{Упрошћен примјер начина управљања врстама и колонама матрице прекидача.}
+    \label{fig:ctrl_dec:example}
+\end{figure}

@@ -16,7 +16,7 @@
     tick align=outside,
     tick pos=left,
     x grid style={darkgray176},
-    xlabel={Број итерација},
+    xlabel={Број итерација/корака},
     xmajorgrids,
     xmin=0, xmax=60,
     xtick style={color=black},
@@ -37,7 +37,7 @@
     tick label style={font=\footnotesize},
     label style={font=\footnotesize}
     ]
-    \addplot [semithick, steelblue31119180, const plot mark right]
+    \addplot [semithick, steelblue31119180, const plot mark right, densely dashdotted]
     table {%
     0 142.8
     1 226.8
@@ -167,7 +167,7 @@
     60 641.2
     };
     \addlegendentry{\P=15, \I=15, \D=0}
-    \addplot [semithick, forestgreen4416044, const plot mark right]
+    \addplot [thick, forestgreen4416044, const plot mark right, densely dotted]
     table {%
     0 560
     1 210

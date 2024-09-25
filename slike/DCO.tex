@@ -138,7 +138,7 @@
     (r2) ++ (-1.8,-1.2) node[](rr4){}
     (rr1) ++ (-0.5,0) node[](rr2){}
     (rr4) ++ (-0.5,0) node[](rr3){}
-    ($(rr1)!0.5!(rr4)$) node[anchor=north, scale=0.8, rotate=-90, text=\CtrlDecColor]{Управљање редовима};
+    ($(rr1)!0.5!(rr4)$) ++ (-0.5,0) node[anchor=north, scale=0.8, rotate=90, text=\CtrlDecColor]{Управљање врстама};
     \filldraw[draw, \CtrlDecColor, fill=\CtrlDecColor, fill opacity=\CtrlDecFillOpacity] (rr1.center) -- (rr2.center) -- (rr3.center) -- (rr4.center) -- (rr1.center);
     %
     % HLLS FROM ROW CONTROL RECTANGLE
@@ -164,6 +164,6 @@
         (ph\i.east) node[anchor=west, scale=0.8]{Фаза \i};
     }
 \end{tikzpicture}
-\caption{Петостепени прстенасти дигитално контролисани осцилатор (\DCO) састављен од тростатичких инвертора, са додатим претварачима напонских нивоа (\HLLS\ и \LHLS) и уоквиреним редом стално укључених тростатичких инвертора.}
+\caption{Петостепени прстенасти дигитално контролисани осцилатор (\DCO) састављен од тростатичких инвертора, са додатим претварачима напонских нивоа (\HLLS\ и \LHLS) и уоквиреном врстом стално укључених тростатичких инвертора.}
 \label{DCO5}
 \end{figure*}

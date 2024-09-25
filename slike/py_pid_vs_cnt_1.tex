@@ -15,7 +15,7 @@
     tick align=outside,
     tick pos=left,
     x grid style={darkgray176},
-    xlabel={Број итерација},
+    xlabel={Број итерација/корака},
     xmajorgrids,
     xmin=0, xmax=250,
     xtick style={color=black},
@@ -32,7 +32,7 @@
     y axis line style = {line width=0.2pt},
     x grid style = {line width=0.2pt},
     y grid style = {line width=0.2pt},
-    legend style={legend image post style={scale=0.82}, cells={anchor=west}, at={(1.0,0.1125)}, font=\scriptsize, line width=0.5pt, legend reversed=true},
+    legend style={legend image post style={scale=0.82}, cells={anchor=west}, at={(0.7,0.113)}, font=\scriptsize, line width=0.5pt, legend reversed=true},
     tick label style={font=\footnotesize},
     label style={font=\footnotesize}
     ]
@@ -547,6 +547,9 @@
     };
     \addlegendentry{\PID\ регулатор (\P=15, \I=15, \D=0)}
     \end{axis}
+    \draw[dashed] (1.65,0) -- (1.65,8.3);
+    \draw[dashed] (11.8,0) -- (11.8,8.3);
+    \node[draw, rectangle, fill=white, text width=2.2cm] at (6.9,1.46){\scriptsize $K_\text{DCO}$=2,8\,MHz\\$f_\text{min}$=42\,MHz};
     \end{tikzpicture}
     \caption{Одзив модела у \PID\ и двостепеном режиму рада.}
     \label{fig:py:pid_vs_cnt_1}
